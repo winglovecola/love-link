@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS lovelink_db;
+
+CREATE DATABASE lovelink_db;

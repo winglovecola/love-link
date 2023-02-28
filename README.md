@@ -38,11 +38,11 @@ Email: winglovework@gmail.com (Please reach me with additional questions)
 
 ## Credit
 
-John Abou (Github Profile: https://github.com/john-abou)
+John Abou (https://github.com/john-abou)
 
-Thomas Tran (Github Profile: https://github.com/tranthom618)
+Thomas Tran (https://github.com/tranthom618)
 
-Wing (Yong Kang He) (Github Profile: https://github.com/winglovecola)
+Wing (Yong Kang He) (https://github.com/winglovecola)
 
 
 ## License

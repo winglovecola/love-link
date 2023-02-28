@@ -1,0 +1,40 @@
+
+<section id="new-post">
+  <div class="post-div">
+    <div id="post-status" class="form-error"></div>
+    <form class="form post-form">
+      <input type="hidden" id="postid" value="{{post.id}}"/>
+      <div class="form-group">
+        <label for="post-subject">Subject:</label>
+        <input class="form-input" type="text" id="post-subject" value="{{post.subject}}"/>
+      </div>
+      <div class="form-group">
+        <label for="post-img">Image URL:</label>
+        <input class="form-input" type="text" id="post-imgurl" value="{{post.img_url}}" />
+      </div>
+      <div class="form-group">
+        <label for="post-detail">Post Detail:</label>
+        <textarea class="form-input"  id="post-detail" >{{post.detail}}</textarea>
+      </div>
+
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td width="50%"><button id="post-submit" class="btn btn-primary" type="button">Post Now</button></td>
+        <td width="50%" align="right">
+        {{#if (check_post_id post.id)}}
+        <button id="post-delete" class="btn btn-primary" type="button">Delete</button>
+        <div id="delete-confirmation">DELETE? 
+          <button id="post-delete-no" class="btn btn-primary" type="button">No</button> <button id="post-delete-yes" class="btn btn-primary" type="button">Yes</button>
+        </div>
+        {{/if}}
+      </td>
+      </tr>
+    </table>
+
+
+      
+    </form>
+  </div>
+</section>
+
+<script src="/assets/js/post.js"></script>

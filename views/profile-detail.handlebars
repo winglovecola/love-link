@@ -1,0 +1,48 @@
+
+<section id="post-detail-sec">
+
+  <div class="card-body" style="border: 1px solid black; border-radius: 10px;">
+    <header class="post-subject" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">{{post.subject}}</header>
+  
+  <div class="post-by">Post by: {{post.poster}} on {{format_time post.updated_time}}</div>
+  <div class="post-img"><img src="{{img_url}}"></div>
+  <div class="post-detail">{{post.detail}}</div>
+  </div>
+
+
+
+  <section class="container">
+
+<div class="card comment-card"><div class="card-body">
+    <section class="post-comment">
+    <div class="comment-div">
+      <div id="comment-status" class="form-error"></div>
+      <input type="hidden" id="postid" value="{{post.id}}"/>
+      <input type="hidden" id="post-commentid" value="{{comment.id}}"/>
+      <form class="form post-form">
+        <div class="form-group">
+          <textarea class="form-input"  id="post-comment-detail" placeholder="New Comment"></textarea>
+
+        </div>
+        <div class="form-group">
+          <button id="post-comment-btn" class="btn btn-primary" type="button">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  </section>
+  </div>
+</div>
+
+    {{#each comments as |comment|}}
+    {{> post-comments}}
+    {{/each}}
+  </section>
+  
+</section>
+
+
+
+
+
+<script src="/assets/js/post-comment.js"></script>

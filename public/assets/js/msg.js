@@ -1,32 +1,17 @@
-const postFormHandler = async (event) => {
-  event.preventDefault();
+const msgSend = async (toUserId) => {
 
-  const postId = document.querySelector('#postid').value.trim();
-  const postSubject = document.querySelector('#post-subject').value.trim();
-  const postImgurl = document.querySelector('#post-imgurl').value.trim();
-  const postDetail = document.querySelector('#post-detail').value.trim();
-  let fetchUrl = "", postMethod = "";
-  if (postSubject && postImgurl && postDetail) {
+  const msgText = $('#msgtext').val().trim();
 
-    if (postId != "")
-    {
-      fetchUrl = "/api/posts/" + postId;
-      postMethod = "PUT";
-    }
-    else
-    {
-      fetchUrl = "/api/posts";
-      postMethod = "POST";
-    }
+  if (msgText) {
 
-    const response = await fetch(fetchUrl, {
-      method: postMethod,
-      body: JSON.stringify({ postSubject, postImgurl, postDetail }),
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/api/msg", {
+      method: "POST",
+      body: JSON.stringify({ msgText, toUserId }),
+      headers: {'Content-Type': 'application/json'},
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard');
+      document.location.replace('/profile');
     } else {
       const isJson = response.headers.get('content-type')?.includes('application/json');
       const data = isJson ? await response.json() : null;
@@ -75,7 +60,3 @@ const postDeleteYes = async () => {
 };
 
 
-document.querySelector('#post-submit').addEventListener('click', postFormHandler);
-document.querySelector('#post-delete').addEventListener('click', postDelete);
-document.querySelector('#post-delete-no').addEventListener('click', postDeleteNo);
-document.querySelector('#post-delete-yes').addEventListener('click', postDeleteYes);

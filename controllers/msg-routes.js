@@ -8,7 +8,15 @@ const withAuth = require('../utils/auth');
 // get post
 router.get('/', withAuth, async (req, res) => {
   try {
-    res.render('post-now', {loggedIn: req.session.loggedIn });
+
+    let msg = {};
+    
+    msg.id = "";
+    msg.toUserid = "2";
+
+
+
+    res.render('msg', {loggedIn: req.session.loggedIn, msg });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

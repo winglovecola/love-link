@@ -1,0 +1,33 @@
+
+<section id="new-post">
+  <div class="post-div">
+    <div id="post-status" class="form-error"></div>
+    <form class="form post-form">
+      <input type="hidden" id="msgid" value="{{msg.id}}"/>
+      <input type="hidden" id="msgToUserid" value="{{msg.toUserid}}"/>
+      <div class="form-group">
+        <label for="post-detail">Message:</label>
+        <textarea class="form-input"  id="msgtext" >{{msg.text}}</textarea>
+      </div>
+
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td width="50%"><button id="send" class="btn btn-primary" type="button" onclick="msgSend ({{msg.toUserid}});">Send</button></td>
+        <td width="50%" align="right">
+        {{#if (check_post_id msg.id)}}
+        <button id="post-delete" class="btn btn-primary" type="button">Delete</button>
+        <div id="delete-confirmation">DELETE? 
+          <button id="post-delete-no" class="btn btn-primary" type="button">No</button> <button id="post-delete-yes" class="btn btn-primary" type="button">Yes</button>
+        </div>
+        {{/if}}
+      </td>
+      </tr>
+    </table>
+
+
+      
+    </form>
+  </div>
+</section>
+
+<script src="/assets/js/msg.js"></script>

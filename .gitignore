@@ -5,3 +5,5 @@ package-lock.json
 .DS_Store
 /assets/videos
 love-link-616b9-firebase-adminsdk-qci3c-305358fd0a.json
+.gitignore
+.env

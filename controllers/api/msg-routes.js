@@ -1,18 +1,40 @@
 const router = require('express').Router();
-const { Message } = require('../../models');
+//const { Message } = require('../../models');
 
-// Create post
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+
+const serviceAccount = require('../../love-link-616b9-firebase-adminsdk-qci3c-305358fd0a.json');
+
+initializeApp({
+  credential: cert(serviceAccount)
+});
+
+const fdb = getFirestore();
+
+
+// Create message
 router.post('/', async (req, res) => {
   try {
-    const postData = await Message.create({
+/*     const postData = await Message.create({
       user_id: req.body.user_id,
       user_fullname: req.body.user_fullname,
       message: req.body.message,
       created_time: Date.now(),
       updated_time: Date.now(),
-    });
+    }); */
 
-    res.status(200).json(postData);
+    const docRef = fdb.collection('msg').doc(req.session.userid.toString());
+
+    await docRef.set({
+      toUser: req.body.toUserId,
+      msgText: req.body.msgText,
+      createAt: Date.now(),
+    });
+    
+
+
+    res.status(200).json();
   } catch (err) {
     console.log(err);
 

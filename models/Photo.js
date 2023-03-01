@@ -19,22 +19,22 @@ Photo.init(
         key: 'id',
       }
     },
-    image_filename: {
+    img_filename: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     //bit size
-    image_size: {
+    img_size: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     //in pixel
-    image_width: {
+    img_width: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     //in pixel
-    image_height: {
+    img_height: {
       type: DataTypes.STRING,
       allowNull: false,
     },

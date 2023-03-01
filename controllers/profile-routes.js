@@ -1,19 +1,21 @@
 const router = require('express').Router();
 const { User } = require('../models');
+
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
-// mainpage and get all posts
-router.get('/', async (req, res) => {
+// Render the user profile page
+router.get('/', withAuth, async (req, res) => {
   try {
-    const userData = await Post.findAll();
+    // Find the logged in user based on the session ID
+    console.log(req.session);
+    const userData = await User.findByPk(req.session.userid);
+    console.log(userData);
 
-    const users = userData.map((post) =>
-      post.get({ plain: true })
-    );
+    const user = [userData].map((userInfo) => userInfo.get({ plain: true }));
 
-    res.render('profile', {
-      users,
+    res.render('user-profile', {
+      user,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -22,7 +24,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
+module.exports = router;
 
 module.exports = router;

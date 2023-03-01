@@ -6,7 +6,6 @@ const profileRoutes = require('./profile-routes.js');
 const postNowRoutes = require('./post-now-routes.js');
 const postDetailRoutes = require('./post-detail-routes.js');
 
-
 router.use('/', homeRoutes);
 
 router.use('/profile', profileRoutes);

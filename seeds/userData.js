@@ -1,4 +1,4 @@
-const { user } = require('../models');
+const { User } = require('../models');
 
 const userdata = [
   // Start of Male Users List
@@ -1221,6 +1221,6 @@ const userdata = [
   },
 ];
 
-const seedUsers = () => user.bulkCreate(userdata);
+const seedUsers = () => User.bulkCreate(userdata);
 
 module.exports = seedUsers;

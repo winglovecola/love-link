@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, Comment } = require('../models');
+const { Post } = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
@@ -10,9 +10,9 @@ router.get('/', withAuth, async (req, res) => {
   try {
 
     let msg = {};
-    
-    msg.id = "";
-    msg.toUserid = "2";
+
+    msg.id = '';
+    msg.toUserid = '2';
 
 
 

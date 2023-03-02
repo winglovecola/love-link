@@ -68,6 +68,10 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    avatar_type: {
+      type: DataTypes.CHAR, //C = custom  or P = preset
+      allowNull: true,
+    },
     created_time: {
       type: DataTypes.STRING(30),
       allowNull: false,

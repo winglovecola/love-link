@@ -11,11 +11,11 @@ router.get('/:id', withAuth, async (req, res) => {
 
 
     const commentData = await Comment.findAll(
-    {
-      where: {
-        post_id: req.params.id,
-      },
-    });
+      {
+        where: {
+          post_id: req.params.id,
+        },
+      });
 
 
     const post = postData.get({ plain: true });

@@ -3,36 +3,30 @@ const {User} = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
-// mainpage and get all posts
-router.get('/', async (req, res) => {
+// Swiping page and get all possible matches
+router.get('/swipe', withAuth, async (req, res) => {
   try {
-    const userData = await User.findAll();
+    // Determine sex of user
+    const sex = req.session.sex;
+    let userData;
 
-    const users = userData.map((user) =>
-      user.get({ plain: true })
-    );
-
-    res.render('profile', {
-      users,
-      loggedIn: req.session.loggedIn,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
-
-
-// Swiping page and get user imgs
-router.get('/', withAuth, async (req, res) => {
-  try {
-    // Get all user possible matches user data
-    const userData = await User.findAll();
+    if (sex === 'm') {
+      userData = await User.findAll({
+        where: {
+          sex: 'f'
+        }
+      });
+    } else {
+      userData = await User.findAll({
+        where: {
+          sex: 'm'
+        }
+      });
+    }
 
     const users = userData.map( (user) => {
       user.get({ plain: true });
     });
-
 
     res.render('homepage', {
       users,

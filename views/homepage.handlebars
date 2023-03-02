@@ -1,8 +1,9 @@
 <div>
     <section class="container photos">
-        {{!-- There may be multiple photos, need to figure out how this looks on the query so we can render the view  --}}
-        {{img_filename}}
 
+        <img src="../../public/assets/img/avatar/preset/{{sex}}/{{avatar}}">
+
+        {{!-- Carousel so the user can click through different photos of potential matches
         <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
         <div class="carousel-inner">
             {{#each photos as |photo|}}
@@ -17,7 +18,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
-        </div>
+        </div> --}}
 
     </section>
 

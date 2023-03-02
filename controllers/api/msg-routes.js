@@ -1,4 +1,4 @@
-const router = require('express').Router();
+/* const router = require('express').Router();
 //const { Message } = require('../../models');
 
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
       created_time: Date.now(),
       updated_time: Date.now(),
     }); */
-
+/*
     const docRef = fdb.collection('msg').doc(req.session.userid.toString());
 
     await docRef.set({
@@ -103,3 +103,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+*/

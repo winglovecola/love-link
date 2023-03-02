@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
       firstname: req.body.user_firstname,
       lastname: req.body.user_lastname,
       type: req.body.user_type,
+      sex: req.body.sex,
       created_time: Date.now(),
       updated_time: Date.now(),
     });
@@ -40,6 +41,7 @@ router.post('/', async (req, res) => {
       req.session.username = req.body.username;
       req.session.user_firstname = req.body.user_firstname;
       req.session.user_lastname = req.body.user_lastname;
+      req.session.sex = req.body.sex;
 
       res.status(200).json(userData);
     });

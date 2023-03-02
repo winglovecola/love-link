@@ -23,6 +23,31 @@ router.get('/', async (req, res) => {
 });
 
 
+// Swiping page and get user imgs
+router.get('/', withAuth, async (req, res) => {
+  try {
+    // Get all user possible matches user data
+    const userData = await User.findAll();
+
+    const users = userData.map( (user) => {
+      user.get({ plain: true });
+    });
+
+    const userIDs = users.map( (user) => {
+      return user.id;
+    });
+
+
+
+    res.render('profile', {
+      users,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 
 router.get('/login', (req, res) => {

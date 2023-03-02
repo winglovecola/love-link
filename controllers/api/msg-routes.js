@@ -16,7 +16,7 @@ const fdb = getFirestore();
 // Create message
 router.post('/', async (req, res) => {
   try {
-/*     const postData = await Message.create({
+    /*     const postData = await Message.create({
       user_id: req.body.user_id,
       user_fullname: req.body.user_fullname,
       message: req.body.message,
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
       msgText: req.body.msgText,
       createAt: Date.now(),
     });
-    
+
 
 
     res.status(200).json();
@@ -50,8 +50,8 @@ router.put('/:id', async (req, res) => {
       detail: req.body.postDetail,
       img_url: req.body.postImgurl,
       updated_time: Date.now(),
-      
-    }, 
+
+    },
     {where: {
       id: req.params.id,
     }});
@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
 
 //delete post
 router.delete('/:id', async (req, res) => {
-  
+
   try {
     let postData = await Post.findByPk(req.params.id, {});
 

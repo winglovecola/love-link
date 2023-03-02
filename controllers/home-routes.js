@@ -33,11 +33,6 @@ router.get('/', withAuth, async (req, res) => {
       user.get({ plain: true });
     });
 
-    const userIDs = users.map( (user) => {
-      return user.id;
-    });
-
-
 
     res.render('homepage', {
       users,

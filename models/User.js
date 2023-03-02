@@ -70,6 +70,7 @@ User.init(
     },
     avatar_type: {
       type: DataTypes.CHAR, //C = custom  or P = preset
+      defaultValue: "",
       allowNull: true,
     },
     created_time: {

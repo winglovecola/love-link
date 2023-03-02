@@ -1,14 +1,8 @@
 <div>
     <section class="container photos">
-
-        <img src="../../public/assets/img/avatar/preset/{{sex}}/{{avatar}}">
-
-        {{!-- Carousel so the user can click through different photos of potential matches
+         {{!-- Carousel so the user can click through different photos of potential matches --}}
         <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
         <div class="carousel-inner">
-            {{#each photos as |photo|}}
-            {{> user-photos}}
-            {{/each}}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -18,12 +12,29 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
-        </div> --}}
+        </div> 
 
     </section>
 
-    <section class="container bio">
-        <h4>{{firstname}} {{lastname}}</h4>
-        <p>{{bio}}</p> 
+    <section class="container">
+        <div class="row">
+
+            <div class="col-1" id="dislike-btn">
+                <button>dislike</butt>
+            </div>
+
+            <div class="col-10 bio">
+            </div>
+            
+            <div class="col-1" id="like-btn">
+                <button>like</button>
+            </div>
+        </div>
     </section>
+
 </div>
+
+
+
+{{{userDataString}}}
+<script src="/assets/js/swipe.js" ></script>

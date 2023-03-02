@@ -39,7 +39,7 @@ router.get('/', withAuth, async (req, res) => {
 
 
 
-    res.render('profile', {
+    res.render('homepage', {
       users,
       loggedIn: req.session.loggedIn,
     });

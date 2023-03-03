@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Photo } = require('../../models');
+const { User, Photo, Match } = require('../../models');
 const multer = require('multer'); // middleware for handling uploaded files through forms
 const path = require('path');
 const fs = require('fs');
@@ -20,6 +20,21 @@ const uploadAvatar = multer({
   dest: path.join(__dirname, userImgTempUpload),
 });
 
+// GET all users
+router.get('/', async (req, res) => {
+  try {
+    const userData = await User.findAll();
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // CREATE new user
 router.post('/', async (req, res) => {
   try {
@@ -30,9 +45,12 @@ router.post('/', async (req, res) => {
       firstname: req.body.user_firstname,
       lastname: req.body.user_lastname,
       type: req.body.user_type,
+      sex: req.body.sex,
       created_time: Date.now(),
       updated_time: Date.now(),
     });
+
+
     const userDataPlain = userData.get({ plain: true });
     req.session.save(() => {
       req.session.loggedIn = true;
@@ -40,6 +58,7 @@ router.post('/', async (req, res) => {
       req.session.username = req.body.username;
       req.session.user_firstname = req.body.user_firstname;
       req.session.user_lastname = req.body.user_lastname;
+      req.session.sex = req.body.sex;
 
       res.status(200).json(userData);
     });
@@ -127,7 +146,7 @@ router.post('/photos', uploadPhoto.single('photos'), async (req, res) => {
         if (!err) {
 
           const photoData = await Photo.create({
-            user_id: req.session.userid,
+            userid: req.session.userid,
             img_filename: req.file.originalname,
             img_size: stats.size,
             img_width: stats.width,
@@ -179,6 +198,44 @@ router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
 
   } catch (err) {
     res.json({ error: err });
+  }
+});
+
+// Get user by id (for getting pictures)
+
+
+
+// Update match model by id (swipe right)
+router.post('/match', async (req, res) => {
+  try {
+    console.log('req.body.match_id:', req.body.match_id);
+    // Check if the match exists already
+    const matchData = await Match.findOne({
+      where: {
+        userid: req.session.userid,
+        match_id: req.body.match_id,
+      },
+    });
+
+    if (!matchData) {
+      // Create a new match
+      const matchData = await Match.create(
+        {
+          userid: req.session.userid,
+          match_id: req.body.match_id,
+          created_time: Date.now(),
+          updated_time: Date.now(),
+        }
+      );
+      res.status(200).json(matchData);
+    } else {
+      // Update the match
+      res.status(200).json({message: 'Match already exists'});
+    }
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 

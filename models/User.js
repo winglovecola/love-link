@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const sequelize = require('../config/connection');
 
 class User extends Model {
@@ -69,7 +69,7 @@ User.init(
       allowNull: true,
     },
     avatar_type: {
-      type: DataTypes.CHAR, //C = custom  or P = preset
+      type: DataTypes.CHAR, //C = custom  or '' = preset
       allowNull: true,
     },
     created_time: {

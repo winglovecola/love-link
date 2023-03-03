@@ -86,20 +86,20 @@ async function handleFormSubmit(event) {
     avatar: currentAvatar.avatar
   };
 
-  console.log(currentAvatar.avatar);
-  console.log(formData);
-
   // Make a request to the server to add the AI profile
   try {
     const response = await fetch('/api/users/ai', {
       method: 'POST',
-      body: formData,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
     });
 
     if (response.ok) {
-      // Log the response
       console.log('Created AI user: ',response);
+      // Redirect to the users-profile page
+      document.location.replace('/matches');
     } else {
       throw response.json();
     }

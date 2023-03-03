@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Photo } = require('../../models');
+const { User, Photo, Match } = require('../../models');
 const multer = require('multer'); // middleware for handling uploaded files through forms
 const path = require('path');
 const fs = require('fs');
@@ -18,6 +18,21 @@ const uploadPhoto = multer({
 
 const uploadAvatar = multer({
   dest: path.join(__dirname, userImgTempUpload),
+});
+
+// GET all users
+router.get('/', async (req, res) => {
+  try {
+    const userData = await User.findAll();
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // CREATE new user
@@ -181,6 +196,44 @@ router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
 
   } catch (err) {
     res.json({ error: err });
+  }
+});
+
+// Get user by id (for getting pictures)
+
+
+
+// Update match model by id (swipe right)
+router.post('/match', async (req, res) => {
+  try {
+    console.log('req.body.match_id:', req.body.match_id);
+    // Check if the match exists already
+    const matchData = await Match.findOne({
+      where: {
+        user_id: req.session.userid,
+        match_id: req.body.match_id,
+      },
+    });
+
+    if (!matchData) {
+      // Create a new match
+      const matchData = await Match.create(
+        {
+          user_id: req.session.userid,
+          match_id: req.body.match_id,
+          created_time: Date.now(),
+          updated_time: Date.now(),
+        }
+      );
+      res.status(200).json(matchData);
+    } else {
+      // Update the match
+      res.status(200).json({message: 'Match already exists'});
+    }
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 

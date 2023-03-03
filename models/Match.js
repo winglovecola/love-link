@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
 class Match extends Model {}
@@ -10,13 +9,13 @@ class Match extends Model {}
 
 Match.init(
   {
-    id: { //jen
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: { //john
+    userid: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -24,7 +23,7 @@ Match.init(
         key: 'id',
       }
     },
-    match_id: { //jen
+    matchid: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

@@ -9,6 +9,22 @@ let usersArray = [];
 let currentUser;
 let userIndex = 0;
 
+
+// Create a function to display the current user
+// If time, add functionality to make a request to get next img
+function displayUser() {
+  // Display the user's avatar
+  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.sex}/${currentUser.avatar}`);
+  avatar.attr('class', 'avatar');
+  carouselInner.append(avatar);
+
+  // Display the user's bio
+  let name = $('<h4>').text(`${currentUser.firstname} ${currentUser.lastname}`).addClass('biotext');
+  let bio = $('<p>').text(currentUser.bio).addClass('biotext');
+  bio.attr('class', 'bio');
+  bioContainer.append(name, bio);
+}
+
 // Create a function to initialize the page
 async function init() {
   // Make a request to get all potential matches for the user
@@ -32,22 +48,8 @@ async function init() {
   displayUser();
 }
 
-// Create a function to display the current user
-// If time, add functionality to make a request to get next img
-function displayUser() {
-  // Display the user's avatar
-  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.sex}/${currentUser.avatar}`);
-  avatar.attr('class', 'avatar');
-  carouselInner.append(avatar);
 
-  // Display the user's bio
-  let name = $('<h4>').text(`${currentUser.firstname} ${currentUser.lastname}`).addClass('biotext');
-  let bio = $('<p>').text(currentUser.bio).addClass('biotext');
-  bio.attr('class', 'bio');
-  bioContainer.append(name, bio);
-}
 
-init();
 
 // Create a function to remove the current user
 function removeUser() {
@@ -99,3 +101,7 @@ likeBtn.click(() => {
     }
     );
 });
+
+
+
+init();

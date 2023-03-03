@@ -4,7 +4,7 @@ const {User} = require('../models');
 const withAuth = require('../utils/auth');
 
 // mainpage and get all posts
-router.get('/', async (req, res) => {
+/* router.get('/', async (req, res) => {
   try {
     const userData = await User.findAll();
 
@@ -12,8 +12,20 @@ router.get('/', async (req, res) => {
       user.get({ plain: true })
     );
 
-    res.render('profile', {
+    res.render('swipe', {
       users,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+}); */
+
+//matches
+router.get('/friendlist', async (req, res) => {
+  try {
+    res.render('friendlist', {
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -22,8 +34,22 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/matches', async (req, res) => {
+  try {
+    res.render('friendlist', {
+      userid: req.session.userid,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+
+
 // Swiping page and get all possible matches
-router.get('/swipe', withAuth, async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     // Determine sex of user
     const sex = req.session.sex;

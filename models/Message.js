@@ -11,7 +11,7 @@ Message.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
+    userid: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

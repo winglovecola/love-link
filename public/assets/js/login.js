@@ -2,8 +2,8 @@ const loginFormHandler = async (event) => {
   event.preventDefault();
 
 
-  const user_email = $("#login-email").val().trim();
-  const user_ps = $("#login-ps").val().trim();
+  const user_email = $('#login-email').val().trim();
+  const user_ps = $('#login-ps').val().trim();
 
 
   if (user_email && user_ps) {
@@ -16,10 +16,10 @@ const loginFormHandler = async (event) => {
     if (response.ok) {
       document.location.replace('/');
     } else {
-      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const isJson = response.headers.get('content-type').includes('application/json');
       const data = isJson ? await response.json() : null;
 
-      
+
       document.querySelector('#signin-status').innerHTML = data.message;
       //alert('Failed to log in.');
     }
@@ -30,12 +30,12 @@ const signupFormHandler = async (event) => {
   event.preventDefault();
 
 
-  const username = $("#signup-username").val().trim();
-  const user_email = $("#signup-email").val().trim();
-  const user_ps = $("#signup-ps").val().trim();
-  const user_firstname = $("#signup-firstname").val().trim();
-  const user_lastname = $("#signup-lastname").val().trim();
-  const user_type = $("#signup-user-type").val().trim();
+  const username = $('#signup-username').val().trim();
+  const user_email = $('#signup-email').val().trim();
+  const user_ps = $('#signup-ps').val().trim();
+  const user_firstname = $('#signup-firstname').val().trim();
+  const user_lastname = $('#signup-lastname').val().trim();
+  const user_type = $('#signup-user-type').val().trim();
 
 
 
@@ -49,9 +49,9 @@ const signupFormHandler = async (event) => {
     if (response.ok) {
       document.location.replace('/');
     } else {
-      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const isJson = response.headers.get('content-type').includes('application/json');
       const data = isJson ? await response.json() : null;
-    
+
       //console.log (data.errors[0].message);
       document.querySelector('#signup-status').innerHTML = data.errors[0].message;
 
@@ -62,11 +62,11 @@ const signupFormHandler = async (event) => {
 
 
 
-$("#login-form").submit(function( event ) {
+$('#login-form').submit(function( event ) {
   loginFormHandler (event);
 });
 
 
-$("#signup-form").submit(function( event ) {
+$('#signup-form').submit(function( event ) {
   signupFormHandler (event);
 });

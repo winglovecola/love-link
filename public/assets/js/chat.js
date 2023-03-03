@@ -13,15 +13,15 @@ const firebaseConfig = {
 // Initialize Firestore through Firebase
 firebase.initializeApp(firebaseConfig);
 
+let groupID = '';
+let groupExist = false;
+let msgOnSnapshotEnabled = false;
 
 
 
-let userid = 1;
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = firebase.firestore();
-
-const username = prompt('Please Tell Us Your Name');
 
 
 function uuidv4() {
@@ -29,34 +29,16 @@ function uuidv4() {
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 }
-const groupID = "testgroup2";
-
-let groupExist = false;
-
-async function msgSend(sendToUserid) {
-
-  // get values to be submitted
-  const timestamp = Date.now();
-  const messageInput = document.getElementById('message-input');
-  const message = messageInput.value;
 
 
-  // clear the input box
-  messageInput.value = '';
 
-  //auto scroll to bottom
-  document
-    .getElementById('messages')
-    .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-
+async function checkGroup(senderUsersId, receiverUserId) {
 
   //check if the field member contain specific user
-  let userList = ['1', '2'];
+  let userList = [senderUsersId.toString (), receiverUserId.toString ()];
 
   let groupData = db.collection('group');
 
-
-  //groupData.where('members', '==', '3');
 
   await groupData.where('members' , 'array-contains-any' , userList).get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
@@ -65,6 +47,8 @@ async function msgSend(sendToUserid) {
 
 
       if (docData.members.includes(userList[0]) && docData.members.includes(userList[1])) {
+
+        groupID = docData.id;
         groupExist = true;
 
         return;
@@ -73,67 +57,132 @@ async function msgSend(sendToUserid) {
     });
   });
 
-
+  console.log ('groupID: ' + groupID);
   // create group and add group memeber if it doesn't exist
 
   if (!groupExist) {
 
-    const groupRef = db.collection('group').doc(groupID);
+    const groupRef = db.collection('group').doc();
 
-    groupRef.set({
+    await groupRef.set({
       id: groupRef.id,
-      createBy: userid,
-      members: [userid.toString (), sendToUserid.toString ()],
-      createTime: Date.now(),
+      createBy: senderUsersId,
+      createAt: timestamp,
+      members: [senderUsersId.toString (), receiverUserId.toString ()],
+
     });
-/*       .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch((error) => {
-        console.error('Error adding document: ', error);
-      }); */
+
+
+    groupID = groupRef.id;
+    /*       .then((docRef) => {
+      console.log('Document written with ID: ', docRef.id);
+    })
+    .catch((error) => {
+      console.error('Error adding document: ', error);
+    }); */
 
 
 
-    console.log ('group CREATED');
+    console.log ('group created');
   } else {
     console.log ('group exist');
   }
 
-  db.collection(`msgs/${groupID}/msg`).add({
-    username: username,
-    message: message
-  });
 
+  return groupID;
+}
+
+async function msgSend(senderUsersId, receiverUserId) {
+
+  // get values to be submitted
+  const timestamp = Date.now();
+  let messageInput = '';
+
+
+  if ($('#chat-input')) {
+    messageInput = $('#chat-input').val ();
+
+  } else {
+
+    return;
+  }
+
+
+
+  db.collection(`msgs/${groupID}/msg`).add({
+    createdBy: senderUsersId,
+    createdAt: timestamp,
+    msgText: messageInput
+
+  });
 
 }
 
 
+
+
 //listen for changes for message
-db.collection(`msgs/${groupID}/msg`).onSnapshot(function(querySnapshot) {
+async function msgOnSnapshot (thisGroupID) {
 
-  querySnapshot.docChanges().forEach(function(change) {
-    console.log(change.doc.data());
-    msgData = change.doc.data();
+  if (!msgOnSnapshotEnabled) {
+    await db.collection(`msgs/${thisGroupID}/msg`).orderBy('createdAt', 'desc').limit(20).onSnapshot(function(querySnapshot) {
 
-
-
-    if (change.type === 'added') {
-      const message = `<li class=${
-        username === msgData.username ? 'sent' : 'receive'
-      }><span>${msgData.username}: </span>${msgData.message}</li>`;
-      // append the message on the page
-      document.getElementById('messages').innerHTML += message;
-    }
-
-  });
+      querySnapshot.docChanges().forEach(function(change) {
+        console.log(change.doc.data());
+        msgData = change.doc.data();
 
 
 
+        if (change.type === 'added') {
+          let msgHtml = `<li>${msgData.msgText}</li>`;
+          // append the message on the page
+          $('#chatbox').append(msgHtml);
+        }
 
+      });
+
+
+    });
+
+  }
+
+  msgOnSnapshotEnabled = true;
+}
+
+
+async function chatStart (thisUserid) {
+  receiverUserId = thisUserid;
+
+  $('#chat-div').show ();
+
+
+  const thisGroupID = await checkGroup(senderUserId, receiverUserId);
+
+  let assignedGroupId = msgOnSnapshot (thisGroupID);
+
+  msgOnSnapshot (assignedGroupId);
+}
+
+function chatClose () {
+
+  $('#chat-div').hide ();
+
+}
+
+
+
+//user action listener
+$('#send-btn').click(function() {
+
+  msgSend(senderUserId, receiverUserId);
 });
 
-
+$(document).on('keypress',function(e) {
+  // eslint-disable-next-line eqeqeq
+  if(e.which == 13) {
+    msgSend(senderUserId, receiverUserId);
+  }
+});
 
 
 //listen for changes from table

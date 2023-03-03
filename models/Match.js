@@ -7,9 +7,9 @@ class Match extends Model {}
 
 //SELECT * FROM match WHERE id ='john' AND match_id='jen';
 
-// When user_id and match_id
-// When John likes Jen, user_id = 1, match_id = 2
-// When Jen likes John, user_id = 2, match_id = 1
+// When userid and match_id
+// When John likes Jen, userid = 1, match_id = 2
+// When Jen likes John, userid = 2, match_id = 1
 
 // If John likes Jen, and Jen likes John, then they are a match
 
@@ -21,7 +21,7 @@ Match.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: { //john
+    userid: { //john
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

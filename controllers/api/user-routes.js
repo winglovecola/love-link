@@ -49,6 +49,8 @@ router.post('/', async (req, res) => {
       created_time: Date.now(),
       updated_time: Date.now(),
     });
+
+
     const userDataPlain = userData.get({ plain: true });
     req.session.save(() => {
       req.session.loggedIn = true;
@@ -144,7 +146,7 @@ router.post('/photos', uploadPhoto.single('photos'), async (req, res) => {
         if (!err) {
 
           const photoData = await Photo.create({
-            user_id: req.session.userid,
+            userid: req.session.userid,
             img_filename: req.file.originalname,
             img_size: stats.size,
             img_width: stats.width,
@@ -210,7 +212,7 @@ router.post('/match', async (req, res) => {
     // Check if the match exists already
     const matchData = await Match.findOne({
       where: {
-        user_id: req.session.userid,
+        userid: req.session.userid,
         match_id: req.body.match_id,
       },
     });
@@ -219,7 +221,7 @@ router.post('/match', async (req, res) => {
       // Create a new match
       const matchData = await Match.create(
         {
-          user_id: req.session.userid,
+          userid: req.session.userid,
           match_id: req.body.match_id,
           created_time: Date.now(),
           updated_time: Date.now(),

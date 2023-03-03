@@ -69,8 +69,8 @@ User.init(
       allowNull: true,
     },
     avatar_type: {
-      type: DataTypes.CHAR, //C = custom  or P = preset
-      defaultValue: "",
+      type: DataTypes.CHAR, //C = custom  or '' = preset
+      defaultValue: '',
       allowNull: true,
     },
     created_time: {

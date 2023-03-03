@@ -1,12 +1,40 @@
-<section id="new-post-sec">
+{{!-- <section id="new-post-sec">
   <a href="/matches" id="matches">Matches</a> <a href="/msg" id="matches">Message</a> 
 </section>
 <section class="user container">
 
+{{!-- Is this needed? --}}
 {{#each users as |user|}}
 {{> profile-list}}
 {{/each}}
 
+</section> --}}
+
+{{!-- Work in Progress --}}
+<section class="header">
+  <h3>LoveLink</h3>
+  <nav>
+    <ul>
+      <li>
+        <a href="#mail-icon-button">✉️</a>
+      </li>
+      <li>
+        <a href="#view-matches-icon-button">💘</a>
+      </li>
+      <li>
+        <a href="#change-avatar-icon-button">🧍</a>
+      </li>
+    </ul>
+  </nav>
 </section>
 
-<script src="/assets/js/profile.js"></script>
+<div class="page-wrap">
+  {{!-- Testing compare Sex/Gender --}}
+  <img src="../public/assets/img/avatar/preset/{{sex}}/{{avatar}}" alt="Profile Avatar"></img>
+</div>
+{{!-- TODO: {{Birthday}} - Currently in UTX format, create function to convert to age --}}
+<div>{{firstname}}" - "birthdayConvert({{birthday}})"</div>
+<div>"Interests: "{{interest}}</div>
+<div>{{bio}}</div>
+
+<script src="/public/assets/js/profile.js"></script>

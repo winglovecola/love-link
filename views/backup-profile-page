@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum</title>
+    <link rel="stylesheet" type="text/css" href="/css/jass.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <section class="header">
+        <h3>LoveLink</h3>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#placeholder-mail">✉️</a>
+                </li>
+                <li>
+                    <a href="#placeholder-matches-view">💘</a>
+                </li>
+                <li>
+                    <a href="#placeholder-avatar">🧍</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+
+    <div class="page-wrap">
+        {{if sex === "m"}}
+        <img src="../public/assets/img/avatar/preset/m/{{avatar}}" alt="Profile Avatar"></img>
+        {{/if}}
+        
+        {{if sex === "f"}} {{!test else if sex === "f"!!}}
+        <img src="../public/assets/img/avatar/preset/f/{{avatar}}" alt="Profile Avatar"></img>
+        {{/if}}
+    </div>
+    <div>{{firstname}}" - "{{birthday}}"</div>
+    <div>"Interests: "{{interest}}</div>
+    <div>{{bio}}</div>
+
+    <script src="./assets/js/backup-user-profile.js"></script>

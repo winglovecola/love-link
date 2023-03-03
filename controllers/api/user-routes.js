@@ -35,6 +35,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET number users
+router.get('/:num', async (req, res) => {
+  try {
+    const userData = await User.findAll({limit: req.params.num});
+    console.log(req.params.num);
+    console.log('made it to the server side');
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // CREATE new user
 router.post('/', async (req, res) => {
   try {
@@ -204,39 +221,48 @@ router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
 // Get user by id (for getting pictures)
 
 
+// Create new AI user
+router.post('/ai', async (req, res) => {
+  console.log('Here is the firstname: ', req.body.firstname);
+  console.log('Here is the lastname: ', req.body.lastname);
+  console.log('Here is the sex: ', req.body.sex);
+  // try {
+  //   const userData = await User.create({
+  //     username: 'AI partner', // To link with the user
+  //     email: 'aipartner@lovelink.com',
+  //     password: 'aipartner',
+  //     firstname: req.body.firstname,
+  //     lastname: req.body.lastname,
+  //     type: 'A',
+  //     sex: req.body.sex,
+  //     interest: req.body.inerests,
+  //     avatar: req.body.avatar,
+  //     avatar_type: '', //preset
+  //     created_time: Date.now(),
+  //     updated_time: Date.now(),
+  //   });
 
-// Update match model by id (swipe right)
-router.post('/match', async (req, res) => {
-  try {
-    console.log('req.body.match_id:', req.body.match_id);
-    // Check if the match exists already
-    const matchData = await Match.findOne({
-      where: {
-        userid: req.session.userid,
-        match_id: req.body.match_id,
-      },
-    });
+  //   console.log(userData.id);
 
-    if (!matchData) {
-      // Create a new match
-      const matchData = await Match.create(
-        {
-          userid: req.session.userid,
-          match_id: req.body.match_id,
-          created_time: Date.now(),
-          updated_time: Date.now(),
-        }
-      );
-      res.status(200).json(matchData);
-    } else {
-      // Update the match
-      res.status(200).json({message: 'Match already exists'});
-    }
+  //   // Create the match for the user as well (create relationship for the)
+  //   const matchData = await Match.create({
+  //     userid: req.session.userid, // The user who creates the AI's iD
+  //     matchid: userData.id, // The AI's ID
+  //     created_time: Date.now(),
+  //     updated_time: Date.now(),
+  //   });
 
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
+  //   const matchDataAI = await Match.create({
+  //     userid: userData.id,
+  //     matchid: req.session.userid,
+  //     created_time: Date.now(),
+  //     updated_time: Date.now(),
+  //   });
+
+  //   res.status(200).json({user: userData, match: matchData, matchAI: matchDataAI});
+  // } catch (err) {
+  //   console.log(err);
+  // }
 });
 
 module.exports = router;

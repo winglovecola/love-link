@@ -1,10 +1,3 @@
-// Theory - This is NOT needed
-// Handlebars.registerHelper("compareSex" , function() {
-//     if (sex === "m") {
-//         return ""
-//     }
-// });
-
 const msgView = async () => {
   // TODO - Test/confirm correct paths
   const response = await fetch("/msg", {
@@ -21,13 +14,13 @@ const msgView = async () => {
 
 const swipeView = async () => {
   // TODO - Test/confirm correct paths (Await to confirm on John's push for his scripts)
-  const response = await fetch("/swipe", {
+  const response = await fetch("/", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
 
   if (response.ok) {
-    document.location.replace("/swipe");
+    document.location.replace("/");
   } else {
     alert("Failed to load.");
   }
@@ -64,20 +57,17 @@ const addPhotos = async () => {
 
 const editBio = async () => {};
 
-function birthdayConvert(birthday) {
-  const birthyear = birthday.getUTCFullYear();
-  const age = new Date().getFullYear() - birthyear;
-  return age;
-}
+// function birthdayConvert(birthday) {
+//   const birthyear = birthday.getUTCFullYear();
+//   const age = new Date().getFullYear() - birthyear;
+//   return age;
+// }
 
-const msgIconLink = document
-  .querySelector("#mail-icon-button")
-  .addEventListener("click", msgView);
-const swipeIconLink = document
+document.querySelector("#mail-icon-button").addEventListener("click", msgView);
+document
   .querySelector("#view-matches-icon-button")
   .addEventListener("click", swipeView);
-const avatarIconLink = document
+document
   .querySelector("#change-avatar-icon-button")
   .addEventListener("click", changeAvatar);
-
-function createHTML() {}
+document.querySelector("#addPhotos").addEventListener("click", addPhotos);

@@ -80,5 +80,38 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Update match model by id (swipe right)
+router.post('/like', async (req, res) => {
+  try {
+    console.log('req.body.match_id:', req.body.match_id);
+    // Check if the match exists already
+    const matchData = await Match.findOne({
+      where: {
+        userid: req.session.userid,
+        match_id: req.body.match_id,
+      },
+    });
+
+    if (!matchData) {
+      // Create a new match
+      const matchData = await Match.create(
+        {
+          userid: req.session.userid,
+          match_id: req.body.match_id,
+          created_time: Date.now(),
+          updated_time: Date.now(),
+        }
+      );
+      res.status(200).json(matchData);
+    } else {
+      // Update the match
+      res.status(200).json({message: 'Match already exists'});
+    }
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;

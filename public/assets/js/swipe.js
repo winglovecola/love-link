@@ -84,7 +84,7 @@ likeBtn.click(() => {
   const likedProfileID = usersArray[userIndex - 1].id; // -1 because userIndex has already been incremented
   let matchData = { match_id: likedProfileID };
 
-  fetch('/api/users/match', {
+  fetch('/api/match/like', {
     method: 'POST',
     body: JSON.stringify(matchData),
     headers: {

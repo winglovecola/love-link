@@ -1,23 +1,39 @@
-<form>
+<form id='ai-prompt-form'>
   <div class="mb-3">
     <label for="firstname" class="form-label">First Name</label>
-    <input type="text" class="form-control" id="firstname" aria-describedby="nameHelp">
+    <input type="text" class="form-control" id="firstname" name="firstname" aria-describedby="nameHelp">
   </div>
   <div class="mb-3">
     <label for="lastname" class="form-label">Last Name</label>
-    <input type="text" class="form-control" id="lastname">
+    <input type="text" class="form-control" id="lastname" name="lastname">
   </div>
   <div class="mb-3">
-    <label for="sex" class="form-label">Sex</label>
-    <input type="text" class="form-control" id="sex">
+    <p>Please select the sex of your AI partner:</p>
+    <input type="radio" id="m" name="sex" value="m">
+    <label for="html">Male</label><br>
+    <input type="radio" id="f" name="sex" value="f">
+    <label for="css">Female</label><br>
   </div>
   <div class="mb-3">
     <label for="interests" class="form-label">Interests</label>
-    <input type="text" class="form-control" id="interests">
+    <input type="text" class="form-control" id="interests" name="interests">
   </div>
   <div class="mb-3">
-    <label for="avatar" class="form-label">Avatar</label>
-    <input type="text" class="form-control" id="avatar">
+    <label for="avatar-select" class="form-label">Scroll to the Avatar you'd like for your AI partner: </label>
+    <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<script src="/assets/js/ai-prompt.js" ></script>

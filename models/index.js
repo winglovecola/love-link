@@ -5,31 +5,31 @@ const Match = require('./Match');
 
 
 User.hasMany(Photo, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
 });
 
 Photo.belongsTo(User, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
 });
 
 
 
 User.hasMany(Message, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
 });
 
 Message.belongsTo(User, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
 });
 
 
 
 User.hasMany(Match, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
 });
 
 Match.belongsTo(User, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
 });
 
 

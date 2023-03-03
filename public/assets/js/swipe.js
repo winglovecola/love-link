@@ -1,31 +1,39 @@
 // Create the DOM elements for the user
 const bioContainer = $('.bio');
-const users = $('#user-info').text();
 const carouselInner = $('.carousel-inner');
 const likeBtn = $('#like-btn');
 const dislikeBtn = $('#dislike-btn');
 
-// Convert the string into an array of objects
-let usersArray = users.split('},');
-usersArray = usersArray.map((user) => {
-  user = user.replace('{', '');
-  user = user.replace('}', '');
-  user = user.replace(/'/g, '');
-  user = user.replace(/ /g, '');
-  user = user.split(',');
-  let userObject = {};
-  user.forEach((item) => {
-    item = item.split(':');
-    userObject[item[0]] = item[1];
-  });
-  return userObject;
-});
-
-// Define the current user - index from 0
+// Create a variable to store user data
+let usersArray = [];
+let currentUser;
 let userIndex = 0;
-let currentUser = usersArray[userIndex];
+
+// Create a function to initialize the page
+async function init() {
+  // Make a request to get all potential matches for the user
+  try {
+    const response = await fetch('/api/users');
+    if (response.ok) {
+      const data = await response.json();
+      // Push the users into the usersArray
+      for (let i = 0; i < data.length; i++) {
+        usersArray.push(data[i]);
+      }
+      // Set the current user
+      currentUser = usersArray[userIndex];
+    } else {
+      throw response.json();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  // Display the first user
+  displayUser();
+}
 
 // Create a function to display the current user
+// If time, add functionality to make a request to get next img
 function displayUser() {
   // Display the user's avatar
   let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.sex}/${currentUser.avatar}`);
@@ -37,12 +45,9 @@ function displayUser() {
   let bio = $('<p>').text(currentUser.bio).addClass('biotext');
   bio.attr('class', 'bio');
   bioContainer.append(name, bio);
-
-  console.log(currentUser);
 }
 
-// Display the first user
-displayUser();
+init();
 
 // Create a function to remove the current user
 function removeUser() {
@@ -60,7 +65,6 @@ function nextUser() {
 
   // Increment the user index
   userIndex++;
-  console.log(userIndex);
 
   // Display the next user
   currentUser = usersArray[userIndex];
@@ -68,6 +72,30 @@ function nextUser() {
 }
 
 // Add event listeners to the bio buttons
-likeBtn.click(() => nextUser());
 dislikeBtn.click(() => nextUser());
+likeBtn.click(() => {
+  // Display the next user
+  nextUser();
 
+  // Make a request to add the liked profile to the user's matches
+  // Note: sql autoincrement starts at 1, but array index starts at 0
+  const likedProfileID = usersArray[userIndex - 1].id; // -1 because userIndex has already been incremented
+  let matchData = { match_id: likedProfileID };
+
+  fetch('/api/users/match', {
+    method: 'POST',
+    body: JSON.stringify(matchData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw response.json();
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    }
+    );
+});

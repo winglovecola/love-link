@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
 class Match extends Model {}
@@ -8,7 +7,7 @@ class Match extends Model {}
 
 //SELECT * FROM match WHERE id ='john' AND match_id='jen';
 
-// When user_id and match_id 
+// When user_id and match_id
 // When John likes Jen, user_id = 1, match_id = 2
 // When Jen likes John, user_id = 2, match_id = 1
 

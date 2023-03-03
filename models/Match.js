@@ -15,13 +15,13 @@ class Match extends Model {}
 
 Match.init(
   {
-    id: { //jen
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: { //john --1
+    user_id: { //john
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -29,7 +29,7 @@ Match.init(
         key: 'id',
       }
     },
-    match_id: { //jen --2
+    match_id: { //jen
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

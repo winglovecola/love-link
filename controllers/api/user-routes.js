@@ -1,16 +1,38 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Photo, Match } = require('../../models');
 const multer = require('multer'); // middleware for handling uploaded files through forms
 const path = require('path');
 const fs = require('fs');
 const sharp = require('sharp'); // middleware for image compression
 
 // Import the custom middleware for handling form data
+
+const userImgPhotoPath = '../../public/assets/img/photos';
+const userImgAvatarCustomPath = '../../public/assets/img/avatar/custom';
+const userImgTempUpload = '../../public/assets/img/tmp_uploads';
+
+
 const uploadPhoto = multer({
-  dest: path.join(__dirname, '../public/assets/images/photos'),
+  dest: path.join(__dirname, userImgTempUpload),
 });
+
 const uploadAvatar = multer({
-  dest: path.join(__dirname, '../public/assets/images/avatar'),
+  dest: path.join(__dirname, userImgTempUpload),
+});
+
+// GET all users
+router.get('/', async (req, res) => {
+  try {
+    const userData = await User.findAll();
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // CREATE new user
@@ -23,6 +45,7 @@ router.post('/', async (req, res) => {
       firstname: req.body.user_firstname,
       lastname: req.body.user_lastname,
       type: req.body.user_type,
+      sex: req.body.sex,
       created_time: Date.now(),
       updated_time: Date.now(),
     });
@@ -33,6 +56,7 @@ router.post('/', async (req, res) => {
       req.session.username = req.body.username;
       req.session.user_firstname = req.body.user_firstname;
       req.session.user_lastname = req.body.user_lastname;
+      req.session.sex = req.body.sex;
 
       res.status(200).json(userData);
     });
@@ -100,42 +124,41 @@ router.post('/logout', (req, res) => {
 });
 
 // Create new photo
-router.post('/photos', uploadPhoto.single('photo'), async (req, res) => {
-  // The name in the middleware for upload.single must match the name coming in from the html form.
+router.post('/photos', uploadPhoto.single('photos'), async (req, res) => {
   try {
-    console.log(req.file);
-
     // Use sharp to resize the image and save it to the public folder
-    const compressImg = await sharp(req.file.path)
-      .resize(600) // resizes the image to 800px wide
-      .jpeg({ quality: 80 }); // converts to jpeg and sets quality to 80%
+    const tempImgFile = req.file.path;
+    const userImgPhotofolderPath = `${path.join(__dirname, userImgPhotoPath)}/${req.session.userid}`;
 
-    // Define the file path to save the image
-    const compressedFilePath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'public',
-      'assets',
-      'img',
-      'photos',
-      req.session.userid,
-      req.file.originalname
-    );
-
-    // saves the compressed image to the public folder, subdirectory photos with the original file name
-    await compressImg.toFile(compressedFilePath);
-
-    // Get the file information for the compressed image
-    try {
-      const stats = await fs.promises.stat(compressedFilePath);
-      console.log('Compressed image size:', stats.size);
-      console.log('Compressed image modified time:', stats.mtime);
-    } catch (err) {
-      console.error(err);
+    if (await !fs.existsSync(userImgPhotofolderPath)){
+      await fs.mkdirSync(userImgPhotofolderPath, { recursive: true });
     }
 
-    res.status(200).send('successfully uploaded!');
+    const userImgPhotoFilePath = `${userImgPhotofolderPath}/${req.file.originalname}`;
+
+    await sharp(tempImgFile)
+      .resize(600) // resizes the image to 800px wide
+      .jpeg({ quality: 80 }) // converts to jpeg and sets quality to 80%
+      .toFile(userImgPhotoFilePath, async (err, stats) => {
+
+        if (!err) {
+
+          const photoData = await Photo.create({
+            user_id: req.session.userid,
+            img_filename: req.file.originalname,
+            img_size: stats.size,
+            img_width: stats.width,
+            img_height: stats.height,
+            created_time: Date.now(),
+            updated_time: Date.now()
+          });
+
+          res.status(200).json(photoData);
+        } else {
+          res.status(400).json('failed to generate photo');
+        }
+      });
+
   } catch (err) {
     res.json({ error: err });
   }
@@ -144,48 +167,73 @@ router.post('/photos', uploadPhoto.single('photo'), async (req, res) => {
 // Create new avatar image
 router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
   try {
-    console.log(req.file);
-
     // Use sharp to resize the image and save it to the public folder
-    const compressImg = await sharp(req.file.path)
+    const tempImgFile = req.file.path;
+
+    const userImgAvatarFileName = `${req.session.userid}.jpg`;
+    const userImgAvatarCustomFilePath = `${path.join(__dirname, userImgAvatarCustomPath)}/${userImgAvatarFileName}`;
+
+    await sharp(tempImgFile)
       .resize(600) // resizes the image to 800px wide
-      .jpeg({ quality: 80 }); // converts to jpeg and sets quality to 80%
+      .jpeg({ quality: 80 }) // converts to jpeg and sets quality to 80%
+      .toFile(userImgAvatarCustomFilePath, async (err, stats) => {
+        if (!err) {
 
-    // Define the file path to save the image
-    const compressedFilePath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'public',
-      'assets',
-      'img',
-      'avatar',
-      'custom',
-      req.file.originalname
-    );
 
-    console.log(compressedFilePath);
+          const avatarData = await User.update(
+            {
+              avatar: userImgAvatarFileName,
+              avatar_type: 'C' //custom
+            },
+            { where: { id: req.session.userid } }
+          );
 
-    // saves the compressed image to the public folder, subdirectory photos with the original file name
-    await compressImg.toFile(`../../public/assets/img/avatar/custom/${req.file.originalname}`);
+          res.status(200).json(avatarData);
+        } else {
+          res.status(400).json('Failed to create avatar');
+        }
+      });
 
-    // Get the file information for the compressed image
-    try {
-      const stats = await fs.promises.stat(compressedFilePath);
-      console.log('Compressed image size:', stats.size);
-      console.log(stats);
-      console.log('Compressed image modified time:', stats.mtime);
-    } catch (err) {
-      console.error(err);
-    }
-
-    const response = Photo.create({
-
-    })
-
-    res.status(200).send('successfully uploaded!');
   } catch (err) {
     res.json({ error: err });
+  }
+});
+
+// Get user by id (for getting pictures)
+
+
+
+// Update match model by id (swipe right)
+router.post('/match', async (req, res) => {
+  try {
+    console.log('req.body.match_id:', req.body.match_id);
+    // Check if the match exists already
+    const matchData = await Match.findOne({
+      where: {
+        user_id: req.session.userid,
+        match_id: req.body.match_id,
+      },
+    });
+
+    if (!matchData) {
+      // Create a new match
+      const matchData = await Match.create(
+        {
+          user_id: req.session.userid,
+          match_id: req.body.match_id,
+          created_time: Date.now(),
+          updated_time: Date.now(),
+        }
+      );
+      res.status(200).json(matchData);
+    } else {
+      // Update the match
+      res.status(200).json({message: 'Match already exists'});
+    }
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 

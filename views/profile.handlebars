@@ -1,12 +1,26 @@
-<section id="new-post-sec">
-  <a href="/matches" id="matches">Matches</a> <a href="/msg" id="matches">Message</a> 
+<section class="header">
+  <h3>LoveLink</h3>
+  <nav>
+    <ul>
+      <li>
+        <a href="#mail-icon-button">✉️</a>
+      </li>
+      <li>
+        <a href="#view-matches-icon-button">💘</a>
+      </li>
+      <li>
+        <a href="#change-avatar-icon-button">🧍</a>
+      </li>
+    </ul>
+  </nav>
 </section>
-<section class="user container">
 
-{{#each users as |user|}}
-{{> profile-list}}
-{{/each}}
-
-</section>
+<div class="page-wrap">
+  <img id = "addPhotos" src="../public/assets/img/avatar/preset/{{sex}}/{{avatar}}" alt="Profile Avatar"></img>
+</div>
+{{!-- TODO: {{Birthday}} - Currently in UTX format, create function to convert to age --}}
+<div>{{firstname}}" - {{!"birthdayConvert({{birthday}}"</div>
+<div>"Interests: "{{interest}}</div>
+<div>{{bio}}</div>
 
 <script src="/assets/js/profile.js"></script>

@@ -20,6 +20,31 @@ const uploadAvatar = multer({
   dest: path.join(__dirname, userImgTempUpload),
 });
 
+// GET 10 users of a certain gender
+router.get('/:gender', async (req, res) => {
+  try {
+    // Get the number of users for the given gender
+    console.log('look here for req.params:', req.params);
+    const userData = await User.findAll({
+      limit: 10,
+      where: {
+        gender: req.params.gender
+      }
+    });
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+    console.log(users);
+
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+
 // GET all users
 router.get('/', async (req, res) => {
   try {
@@ -45,7 +70,7 @@ router.post('/', async (req, res) => {
       firstname: req.body.user_firstname,
       lastname: req.body.user_lastname,
       type: req.body.user_type,
-      sex: req.body.sex,
+      gender: req.body.gender,
       created_time: Date.now(),
       updated_time: Date.now(),
     });
@@ -58,7 +83,7 @@ router.post('/', async (req, res) => {
       req.session.username = req.body.username;
       req.session.user_firstname = req.body.user_firstname;
       req.session.user_lastname = req.body.user_lastname;
-      req.session.sex = req.body.sex;
+      req.session.gender = req.body.gender;
 
       res.status(200).json(userData);
     });
@@ -204,35 +229,40 @@ router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
 // Get user by id (for getting pictures)
 
 
-
-// Update match model by id (swipe right)
-router.post('/match', async (req, res) => {
+// Create new AI user
+router.post('/ai', async (req, res) => {
   try {
-    console.log('req.body.match_id:', req.body.match_id);
-    // Check if the match exists already
-    const matchData = await Match.findOne({
-      where: {
-        userid: req.session.userid,
-        match_id: req.body.match_id,
-      },
+    const userData = await User.create({
+      username: 'AI partner', // To link with the user
+      email: `${req.body.firstName}.${req.body.lastName}@lovelink.com`,
+      password: 'aipartner',
+      firstname: req.body.firstName,
+      lastname: req.body.lastName,
+      type: 'A',
+      gender: req.body.gender,
+      interest: req.body.interest,
+      avatar: req.body.avatar.trim(),
+      avatar_type: '', //preset
+      created_time: Date.now(),
+      updated_time: Date.now(),
     });
 
-    if (!matchData) {
-      // Create a new match
-      const matchData = await Match.create(
-        {
-          userid: req.session.userid,
-          match_id: req.body.match_id,
-          created_time: Date.now(),
-          updated_time: Date.now(),
-        }
-      );
-      res.status(200).json(matchData);
-    } else {
-      // Update the match
-      res.status(200).json({message: 'Match already exists'});
-    }
+    // Create the match for the user as well (create relationship for the)
+    const matchData = await Match.create({
+      userid: req.session.userid, // The user who creates the AI's iD
+      match_id: userData.id, // The AI's ID
+      created_time: Date.now(),
+      updated_time: Date.now(),
+    });
 
+    const matchDataAI = await Match.create({
+      userid: userData.id, // The AI's ID
+      match_id: req.session.userid, // The user who creates the AI's iD
+      created_time: Date.now(),
+      updated_time: Date.now(),
+    });
+
+    res.status(200).json({user: userData, match: matchData, matchAI: matchDataAI});
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

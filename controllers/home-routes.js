@@ -22,7 +22,7 @@ const withAuth = require('../utils/auth');
   }
 }); */
 
-//matches
+// Get all matches
 router.get('/friendlist', async (req, res) => {
   try {
     res.render('friendlist', {
@@ -46,25 +46,35 @@ router.get('/matches', async (req, res) => {
   }
 });
 
+router.get('/ai-partner', async (req, res) => {
+  try {
+    res.render('ai-prompts', {
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 
 // Swiping page and get all possible matches
 router.get('/', withAuth, async (req, res) => {
   try {
-    // Determine sex of user
-    const sex = req.session.sex;
-    let userData; //userData is working as intended
+    // Determine gender of user
+    const gender = req.session.gender;
+    let userData; 
 
-    if (sex === 'm') {
+    if (gender === 'm') {
       userData = await User.findAll({
         where: {
-          sex: 'f'
+          gender: 'f'
         }
       });
     } else {
       userData = await User.findAll({
         where: {
-          sex: 'm'
+          gender: 'm'
         }
       });
     }
@@ -73,19 +83,8 @@ router.get('/', withAuth, async (req, res) => {
       user.get({ plain: true })
     );
 
-    console.log(users[0]);
-
-    // Create a new string that has all of the user information. Pass this to a script tag in the client side.
-    let userDataString = '<script id="user-info">[';
-    users.forEach((user) => {
-      let storage = `{id: '${user.id}',firstname: '${user.firstname}',lastname: '${user.lastname}',sex: '${user.sex}',bio: '${user.bio}',avatar: '${user.avatar}'},`;
-      userDataString += storage;
-    });
-    userDataString += ']</script>';
-
     res.render('matches', {
       users,
-      userDataString,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

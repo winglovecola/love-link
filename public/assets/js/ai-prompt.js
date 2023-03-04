@@ -3,6 +3,7 @@ const carouselInner = $('.carousel-inner');
 const nextBtn = $('.carousel-control-next');
 const prevBtn = $('.carousel-control-prev');
 const aiForm = $('#ai-prompt-form');
+const genderRadios = $('input[name=\'gender\']');
 
 // Create a variable to store avatar data
 let avatarsArray = [];
@@ -12,32 +13,9 @@ let avatarIndex = 0;
 // Create a function to display the an avatar
 function displayAvatar() {
   // Display the avatar's avatar
-  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentAvatar.sex}/${currentAvatar.avatar}`);
+  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentAvatar.gender}/${currentAvatar.avatar}`);
   avatar.attr('class', 'avatar');
   carouselInner.append(avatar);
-}
-
-// Create a function to initialize the page
-async function init() {
-  // Make a request to get all potential matches for the avatar
-  try {
-    const response = await fetch('/api/users?num=10');
-    if (response.ok) {
-      const data = await response.json();
-      // Push the avatars into the avatarsArray
-      for (let i = 0; i < data.length; i++) {
-        avatarsArray.push(data[i]);
-      }
-      // Set the current avatar
-      currentAvatar = avatarsArray[avatarIndex];
-    } else {
-      throw response.json();
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  // Display the first avatar
-  displayAvatar();
 }
 
 // Create a function to remove the current avatar
@@ -73,6 +51,30 @@ function prevAvatar() {
   }
 }
 
+// Create a function to initialize the page
+async function genderEventHandler(gender) {
+  // Make a request to get all potential matches for the avatar
+  try {
+    const response = await fetch(`/api/users/${gender}`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      // Push the avatars into the avatarsArray
+      for (let i = 0; i < data.length; i++) {
+        avatarsArray.push(data[i]);
+      }
+      // Set the current avatar
+      currentAvatar = avatarsArray[avatarIndex];
+    } else {
+      throw response.json();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  // Display the first avatar
+  displayAvatar();
+}
+
 // Create a function to handle the form submission
 async function handleFormSubmit(event) {
   event.preventDefault();
@@ -81,7 +83,7 @@ async function handleFormSubmit(event) {
   const formData = {
     firstName: $('#firstname').val(),
     lastName: $('#lastname').val(),
-    sex: $('input[name=\'sex\']:checked').val(),
+    gender: $('input[name=\'gender\']:checked').val(),
     interest: $('#interests').val(),
     avatar: currentAvatar.avatar
   };
@@ -111,7 +113,23 @@ async function handleFormSubmit(event) {
 // Add event listeners to the form
 aiForm.on('submit', handleFormSubmit);
 
-init();
+// Event lister for loading avatars
+genderRadios.on('change', () => {
+  // Remove the current avatar
+  removeAvatar();
 
+  // Reset the avatar index and array
+  avatarIndex = 0;
+  avatarsArray = [];
+
+  // Get the current gender the user selected
+  genderRadios.each((index, element) => {
+    if (element.checked) {
+      genderEventHandler(element.value); // passes f or m
+    }
+  });
+});
+
+// Event listeners to scroll through avatar options
 nextBtn.on('click', nextavatar);
 prevBtn.on('click', prevAvatar);

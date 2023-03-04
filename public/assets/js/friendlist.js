@@ -17,7 +17,7 @@ function renderUserList (mode) {
       html += `
       <div id="u${thisUser.id}" class="cards userlist" onclick="chatStart ('${thisUser.id}')">
         <div class="cards-body">
-          <div class="avatar"><img src="/assets/img/avatar/preset/${thisUser.sex}/${thisUser.avatar}"></div>
+          <div class="avatar"><img src="/assets/img/avatar/preset/${thisUser.gender}/${thisUser.avatar}"></div>
           
           <div class="fullname">${thisUser.firstname} ${thisUser.lastname}</div>
         </div>

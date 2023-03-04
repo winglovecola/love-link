@@ -20,27 +20,35 @@ const uploadAvatar = multer({
   dest: path.join(__dirname, userImgTempUpload),
 });
 
-// GET all users
-router.get('/', async (req, res) => {
+// GET 10 users of a certain gender
+router.get('/:gender', async (req, res) => {
   try {
-    const userData = await User.findAll();
+    // Get the number of users for the given gender
+    console.log('look here for req.params:', req.params);
+    const userData = await User.findAll({
+      limit: 10,
+      where: {
+        gender: req.params.gender
+      }
+    });
 
     const users = userData.map((user) =>
       user.get({ plain: true })
     );
+    console.log(users);
 
     res.status(200).json(users);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
-// GET number users
-router.get('/:num', async (req, res) => {
+
+// GET all users
+router.get('/', async (req, res) => {
   try {
-    const userData = await User.findAll({limit: req.params.num});
-    console.log(req.params.num);
-    console.log('made it to the server side');
+    const userData = await User.findAll();
 
     const users = userData.map((user) =>
       user.get({ plain: true })
@@ -62,7 +70,7 @@ router.post('/', async (req, res) => {
       firstname: req.body.user_firstname,
       lastname: req.body.user_lastname,
       type: req.body.user_type,
-      sex: req.body.sex,
+      gender: req.body.gender,
       created_time: Date.now(),
       updated_time: Date.now(),
     });
@@ -75,7 +83,7 @@ router.post('/', async (req, res) => {
       req.session.username = req.body.username;
       req.session.user_firstname = req.body.user_firstname;
       req.session.user_lastname = req.body.user_lastname;
-      req.session.sex = req.body.sex;
+      req.session.gender = req.body.gender;
 
       res.status(200).json(userData);
     });
@@ -231,9 +239,9 @@ router.post('/ai', async (req, res) => {
       firstname: req.body.firstName,
       lastname: req.body.lastName,
       type: 'A',
-      sex: req.body.sex,
+      gender: req.body.gender,
       interest: req.body.interest,
-      avatar: req.body.avatar,
+      avatar: req.body.avatar.trim(),
       avatar_type: '', //preset
       created_time: Date.now(),
       updated_time: Date.now(),

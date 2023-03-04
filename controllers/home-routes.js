@@ -61,20 +61,20 @@ router.get('/ai-partner', async (req, res) => {
 // Swiping page and get all possible matches
 router.get('/', withAuth, async (req, res) => {
   try {
-    // Determine sex of user
-    const sex = req.session.sex;
-    let userData; //userData is working as intended
+    // Determine gender of user
+    const gender = req.session.gender;
+    let userData; 
 
-    if (sex === 'm') {
+    if (gender === 'm') {
       userData = await User.findAll({
         where: {
-          sex: 'f'
+          gender: 'f'
         }
       });
     } else {
       userData = await User.findAll({
         where: {
-          sex: 'm'
+          gender: 'm'
         }
       });
     }

@@ -14,7 +14,7 @@ let userIndex = 0;
 // If time, add functionality to make a request to get next img
 function displayUser() {
   // Display the user's avatar
-  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.sex}/${currentUser.avatar}`);
+  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.gender}/${currentUser.avatar}`);
   avatar.attr('class', 'avatar');
   carouselInner.append(avatar);
 

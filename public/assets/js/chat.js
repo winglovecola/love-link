@@ -253,7 +253,6 @@ async function chatStart (targetedUserData) {
 
 
   // eslint-disable-next-line eqeqeq
-  if (targetedUserData != receiverUserData) {
 
     //reset the the variables and listen to new user if this user is not assigned previously
     msgOnSnapshotEnabled = false;
@@ -263,17 +262,14 @@ async function chatStart (targetedUserData) {
     $('#chatbox').html('');
 
     receiverUserData = targetedUserData;
-
-
     $('#chat-div').show ();
-
 
     groupID = await checkGroup(senderUserId, receiverUserData.id);
 
-    console.log ('GROUPID: ' + groupID);
+    //console.log ('GROUPID: ' + groupID);
     msgSnapshotListener = await msgOnSnapshot (groupID);
 
-  }
+
 }
 
 async function chatClose () {

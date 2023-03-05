@@ -273,7 +273,7 @@ router.post('/ai', async (req, res) => {
       interest: req.body.interest,
       avatar: req.body.avatar.trim(),
       avatar_type: '', //preset
-      personalitytraits: req.body.personalitytraits,
+      personality: req.body.personality,
       created_time: Date.now(),
       updated_time: Date.now(),
     });

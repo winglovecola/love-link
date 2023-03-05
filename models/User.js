@@ -48,8 +48,12 @@ User.init(
       type: DataTypes.CHAR,
       allowNull: false,
     },
-    sex: {
+    gender: {
       type: DataTypes.CHAR,
+      allowNull: true,
+    },
+    personality: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
     interest: {

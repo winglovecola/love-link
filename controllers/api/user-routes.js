@@ -35,6 +35,38 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+router.get('/swipe', async (req, res) => {
+  try {
+
+
+    let oppositeGender = '';
+    // eslint-disable-next-line eqeqeq
+    if (req.session.gender == 'm')
+      // eslint-disable-next-line curly
+      oppositeGender = 'f';
+    else
+      // eslint-disable-next-line curly
+      oppositeGender = 'm';
+
+
+    const userData = await User.findAll({
+      attributes: {exclude: [req.session.userid]},
+      where: {
+        gender: oppositeGender
+      }
+    });
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // CREATE new user
 router.post('/', async (req, res) => {
   try {
@@ -45,7 +77,7 @@ router.post('/', async (req, res) => {
       firstname: req.body.user_firstname,
       lastname: req.body.user_lastname,
       type: req.body.user_type,
-      sex: req.body.sex,
+      gender: req.body.gender,
       created_time: Date.now(),
       updated_time: Date.now(),
     });
@@ -58,7 +90,7 @@ router.post('/', async (req, res) => {
       req.session.username = req.body.username;
       req.session.user_firstname = req.body.user_firstname;
       req.session.user_lastname = req.body.user_lastname;
-      req.session.sex = req.body.sex;
+      req.session.gender = req.body.gender;
 
       res.status(200).json(userData);
     });
@@ -103,6 +135,7 @@ router.post('/login', async (req, res) => {
       req.session.username = userDataPlain.username;
       req.session.user_firstname = userDataPlain.firstname;
       req.session.user_lastname = userDataPlain.lastname;
+      req.session.gender = userDataPlain.gender;
 
       res
         .status(200)

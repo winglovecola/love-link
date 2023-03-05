@@ -69,6 +69,18 @@ const matchData = [
     updated_time: Date.now(),
   },
   {
+    userid: 1,
+    match_id: 70,
+    created_time: Date.now(),
+    updated_time: Date.now(),
+  },
+  {
+    userid: 70,
+    match_id: 1,
+    created_time: Date.now(),
+    updated_time: Date.now(),
+  },
+  {
     userid: 71,
     match_id: 1,
     created_time: Date.now(),

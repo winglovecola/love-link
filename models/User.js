@@ -76,7 +76,7 @@ User.init(
       type: DataTypes.CHAR, //C = custom  or '' = preset
       allowNull: true,
     },
-    personalitytraits: {
+    personality: {
       type: DataTypes.STRING,
       allowNull: true,
     },

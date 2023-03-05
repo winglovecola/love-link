@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
     const allUserList = userLikeList.concat(userLikeMeList);
 
     const userDataObj = await User.findAll({
-      attributes: ['id', 'username', 'firstname', 'lastname', 'sex', 'interest', 'avatar', 'avatar_type'],
+      attributes: ['id', 'username', 'firstname', 'lastname', 'gender', 'interest', 'avatar', 'avatar_type', 'type'],
       where: {
         id: allUserList,
       },

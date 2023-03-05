@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mynerve&family=Pacifico&family=Roboto:wght@100&family=Shantell+Sans:wght@300&display=swap" rel="stylesheet">
 
   
   <script src="/assets/js/jquery-3.6.3.min.js"></script>
@@ -24,30 +24,30 @@
 </head>
 
 <body>
-  <header id="headerbar">
-    <div>Love Link</div>
-  </header>
-  <nav>
-    <a href="/">Home</a>
-    
+  
+    <header id="headerbar"><div id="logodiv">Love Link</div>
+      <nav>
+        
+        <a href="/">Home</a>
+        
+        {{#if loggedIn}}
+        <a id="link-matches" href="/matches">Matches</a>
+        
+        <a id="link-profile" href="/profile">Profile</a>
+        <a id="link-logout" href="#">Logout</a>
+        {{else}}
+        <a id="link-login" href="/login">Login</a>
+        {{/if}}
+
+      </nav>
+    </header>
+  <div id="bodycon">
+    {{{body}}}
+  </div>
+
     {{#if loggedIn}}
-    <a id="matches" href="/matches">Matches</a>
-    <a id="profile" href="#">My Profile</a>
-    <a id="logout" href="#">Logout</a>
-    {{else}}
-    <a href="/login">Login</a>
-    {{/if}}
-  </nav>
-  <main>
-    
-      {{{body}}}
-    
-  </main>
-  {{#if loggedIn}}
   <script src="/assets/js/main.js"></script>
   {{/if}}
-
-  
 </body>
 
 </html>

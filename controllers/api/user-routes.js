@@ -20,30 +20,30 @@ const uploadAvatar = multer({
   dest: path.join(__dirname, userImgTempUpload),
 });
 
-// GET 10 users of a certain gender
-router.get('/:gender', async (req, res) => {
+// Get photos for a user
+router.get('/photos', async (req, res) => {
   try {
-    // Get the number of users for the given gender
-    console.log('look here for req.params:', req.params);
-    const userData = await User.findAll({
-      limit: 10,
-      where: {
-        gender: req.params.gender
-      }
+    const userData = await User.findByPk(req.session.userid, {
+      include: [{model: Photo}],
     });
 
-    const users = userData.map((user) =>
-      user.get({ plain: true })
-    );
-    console.log(users);
+    console.log('made it into the direct route');
 
-    res.status(200).json(users);
+    if (!userData) {
+      res.status(404).json({ message: 'No user found with this id!' });
+      return;
+    }
+
+    user = userData.get({ plain: true });
+
+    // console.log('userData:', userData);
+    // console.log('user:', user);
+
+    res.status(200).json(userData);
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
-
 
 // GET all users
 router.get('/', async (req, res) => {
@@ -226,9 +226,6 @@ router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
   }
 });
 
-// Get user by id (for getting pictures)
-
-
 // Create new AI user
 router.post('/ai', async (req, res) => {
   try {
@@ -263,6 +260,28 @@ router.post('/ai', async (req, res) => {
     });
 
     res.status(200).json({user: userData, match: matchData, matchAI: matchDataAI});
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// GET 10 users of a certain gender
+router.get('/:gender', async (req, res) => {
+  try {
+    // Get the number of users for the given gender
+    const userData = await User.findAll({
+      limit: 10,
+      where: {
+        gender: req.params.gender
+      }
+    });
+
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
+
+    res.status(200).json(users);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

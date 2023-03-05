@@ -1,0 +1,84 @@
+<form id='ai-prompt-form'>
+  <div class="mb-3">
+    <label for="firstname" class="form-label">First Name</label>
+    <input type="text" class="form-control" id="firstname" name="firstname" aria-describedby="nameHelp">
+  </div>
+  <div class="mb-3">
+    <label for="lastname" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="lastname" name="lastname">
+  </div>
+  <div class="mb-3">
+    <p>Please select the gender of your AI partner:</p>
+    <input type="radio" id="m" name="gender" value="m">
+    <label for="html">Male</label><br>
+    <input type="radio" id="f" name="gender" value="f">
+    <label for="css">Female</label><br>
+  </div>
+  <div class="mb-3">
+    <label for="interests" class="form-label">Interests</label>
+    <input type="text" class="form-control" id="interests" name="interests">
+  </div>
+  <div class="mb-3">
+    <div class="row mb-3">
+      <label for="personality-traits" class="form-label">Personality Traits</label>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait1" name="personality[]" value="Funny">
+        <label class="form-check-label" for="trait1">Funny</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait2" name="personality[]" value="Extroverted">
+        <label class="form-check-label" for="trait2">Extroverted</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait3" name="personality[]" value="Introverted">
+        <label class="form-check-label" for="trait3">Introverted</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait4" name="personality[]" value="Kind">
+        <label class="form-check-label" for="trait4">Kind</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait5" name="personality[]" value="Confident">
+        <label class="form-check-label" for="trait5">Confident</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait6" name="personality[]" value="Adventurous">
+        <label class="form-check-label" for="trait6">Adventurous</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait7" name="personality[]" value="Caring">
+        <label class="form-check-label" for="trait7">Caring</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait8" name="personality[]" value="Loyal">
+        <label class="form-check-label" for="trait8">Loyal</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait9" name="personality[]" value="Creative">
+        <label class="form-check-label" for="trait9">Creative</label>
+      </div>
+      <div class="col-md-6">
+        <input class="form-check-input" type="checkbox" id="trait10" name="personality[]" value="Smart">
+        <label class="form-check-label" for="trait10">Smart</label>
+      </div>
+    </div>
+  </div>
+  <p id="avatar-instructions"></p>
+  <div class="mb-3 carousel-div">
+    <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script src="/assets/js/ai-prompt.js" ></script>

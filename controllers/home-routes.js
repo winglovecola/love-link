@@ -22,8 +22,8 @@ const withAuth = require('../utils/auth');
   }
 }); */
 
-//matches
-router.get('/friendlist', async (req, res) => {
+// Friendslist page
+router.get('/friendlist', withAuth, async (req, res) => {
   try {
     res.render('friendlist', {
       loggedIn: req.session.loggedIn,
@@ -34,7 +34,8 @@ router.get('/friendlist', async (req, res) => {
   }
 });
 
-router.get('/matches', async (req, res) => {
+// Matches page
+router.get('/matches', withAuth, async (req, res) => {
   try {
     res.render('friendlist', {
       userid: req.session.userid,
@@ -46,6 +47,17 @@ router.get('/matches', async (req, res) => {
   }
 });
 
+// AI partner page
+router.get('/ai-partner', withAuth,async (req, res) => {
+  try {
+    res.render('ai-prompts', {
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 
 // Swiping page and get all possible matches
@@ -53,6 +65,7 @@ router.get('/', withAuth, async (req, res) => {
   try {
 
     res.render('matches', {
+
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

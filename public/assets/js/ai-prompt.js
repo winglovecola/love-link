@@ -90,7 +90,7 @@ async function handleFormSubmit(event) {
     lastName: $('#lastname').val(),
     gender: $('input[name=\'gender\']:checked').val(),
     interest: $('#interests').val(),
-    personalitytraits: selectedTraits,
+    personality: selectedTraits,
     avatar: currentAvatar.avatar
   };
 

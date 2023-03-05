@@ -76,6 +76,10 @@ User.init(
       type: DataTypes.CHAR, //C = custom  or '' = preset
       allowNull: true,
     },
+    personalitytraits: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     created_time: {
       type: DataTypes.STRING(30),
       allowNull: false,

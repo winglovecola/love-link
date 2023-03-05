@@ -1,3 +1,4 @@
+// Require the function to initialize the carousel with user photos
 // Create the DOM elements for the user
 const bioContainer = $('.bio');
 const carouselInner = $('.carousel-inner');
@@ -10,19 +11,54 @@ let currentUser;
 let userIndex = 0;
 
 
-// Create a function to display the current user
-// If time, add functionality to make a request to get next img
+// Function to display the next user, displays avatar
 function displayUser() {
+
   // Display the user's avatar
   let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.gender}/${currentUser.avatar}`);
   avatar.attr('class', 'avatar');
   carouselInner.append(avatar);
+
 
   // Display the user's bio
   let name = $('<h4>').text(`${currentUser.firstname} ${currentUser.lastname}`).addClass('biotext-name');
   let bio = $('<p>').text(currentUser.bio).addClass('biotext');
   bio.attr('class', 'bio');
   bioContainer.append(name, bio);
+}
+
+// Create a function to initialize the carousel
+async function initCarousel() {
+  try {
+    const response = await fetch('/api/users/photos');
+
+    if (response.ok) {
+      const userData = await response.json();
+      const photos = userData.photos;
+      console.log(photos);
+
+      // Stop the carousel auto slide
+      $('.carousel').carousel({
+        interval: false,
+      });
+
+      // Create a div for each photo and append it to the carousel
+      for (photo of photos) {
+
+        // Create a new div for each photo
+        const newDiv = document.createElement('div');
+        newDiv.classList.add('carousel-item');
+        carouselInner.append(newDiv);
+
+        const newImg = document.createElement('img');
+        newImg.setAttribute('src', `assets/img/photos/${currentUser.id}/${photo.img_filename}`);
+        newImg.setAttribute('class', 'd-block w-100');
+        newDiv.append(newImg);
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 // Create a function to initialize the page
@@ -49,15 +85,15 @@ async function init() {
   }
   // Display the first user
   displayUser();
+
+  // Initialize the carousel
+  initCarousel();
 }
-
-
-
 
 // Create a function to remove the current user
 function removeUser() {
   // Remove the user's avatar
-  $('.avatar').remove();
+  carouselInner.empty();
 
   // Remove the user's bio
   $('.bio').empty();
@@ -74,6 +110,7 @@ function nextUser() {
   // Display the next user
   currentUser = usersArray[userIndex];
   displayUser();
+  initCarousel();
 }
 
 // Add event listeners to the bio buttons
@@ -87,7 +124,7 @@ likeBtn.click(() => {
   const likedProfileID = usersArray[userIndex - 1].id; // -1 because userIndex has already been incremented
   let matchData = { match_id: likedProfileID };
 
-  fetch('/api/users/match', {
+  fetch('/api/match/like', {
     method: 'POST',
     body: JSON.stringify(matchData),
     headers: {

@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="/assets/css/friendlist.css" />
+<link rel="stylesheet" href="/assets/css/chat.css" />
+
+
 <div id="chat-div">
     <a href="javascript:void(0)" class="closebtn" onclick="chatClose()">&times;</a>
     <div id="chat-body" class="chat-body custom-scroll">
@@ -7,14 +11,14 @@
     </div>
 
     <div id="chat-textbox">
-      <input id="chat-input" type="text" placeholder="message" /><span id="send-btn" >Send</span>
+      <input id="chat-input" type="text" placeholder="message" /><input id="send-btn" type="button" value="Send"/>
     </div>
-  </div>
+
   
 </div>
 <div id="friendlist-con">
-  <div class="container">
-    <div class="like cards"><a href="#" onclick="renderUserList ('liked')">Liked<span id="liked-count"></span></a></div> <div class="matched cards"><a href="#" onclick="renderUserList ('matched')">Matched<span id="matched-count"></span></a></div> <div class="liked-me cards"><a href="#" onclick="renderUserList ('likedMe')">Liked Me<span id="likedme-count"></span></a></div>
+  <div class="friendlist-nav container">
+    <div id="nav-link-liked" class="nav-link-btn cards"><a href="#" onclick="renderUserList ('liked')">Liked<span id="liked-count"></span></a></div> <div id="nav-link-matched" class="nav-link-btn cards"><a href="#" onclick="renderUserList ('matched')">Matched<span id="matched-count"></span></a></div> <div id="nav-link-likedme" class="nav-link-btn cards"><a href="#" onclick="renderUserList ('likedMe')" >Liked Me<span id="likedme-count"></span></a></div>
   </div>
   <div id="users-con" class="container"></div>
 </div>
@@ -22,10 +26,11 @@
 
 
 
-<link rel="stylesheet" href="/assets/css/friendlist.css" />
+
 
 <script>var userid = "{{{userid}}}";</script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> 
 <script src="/assets/js/friendlist.js"></script>
 <script src="/assets/js/chat.js"></script>
+<script src="/assets/js/chatGPT.js"></script>

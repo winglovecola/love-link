@@ -1,5 +1,5 @@
-const loginFormHandler = async (event) => {
-  event.preventDefault();
+const loginFormHandler = async () => {
+  //event.preventDefault();
 
 
   const user_email = $('#login-email').val().trim();
@@ -20,14 +20,14 @@ const loginFormHandler = async (event) => {
       const data = isJson ? await response.json() : null;
 
 
-      document.querySelector('#signin-status').innerHTML = data.message;
+      $('#login-email').html (data.message);
       //alert('Failed to log in.');
     }
   }
 };
 
-const signupFormHandler = async (event) => {
-  event.preventDefault();
+const signupFormHandler = async () => {
+  //event.preventDefault();
 
 
   const username = $('#signup-username').val().trim();
@@ -36,13 +36,17 @@ const signupFormHandler = async (event) => {
   const user_firstname = $('#signup-firstname').val().trim();
   const user_lastname = $('#signup-lastname').val().trim();
   const user_type = $('#signup-user-type').val().trim();
+  const gender = $('[name=gender]:checked').val();
+  if (!gender) {
+    $('#signup-status').html ('Please select a gender before preceed');
+  } else {
+    $('#signup-status').html ('');
+  }
 
-
-
-  if (username && user_email && user_ps && user_firstname && user_lastname) {
+  if (username && user_email && user_ps && user_firstname && user_lastname && gender) {
     const response = await fetch('/api/users', {
       method: 'POST',
-      body: JSON.stringify({ username, user_email, user_ps, user_firstname, user_lastname, user_type }),
+      body: JSON.stringify({ username, user_email, user_ps, user_firstname, user_lastname, user_type, gender }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -62,11 +66,11 @@ const signupFormHandler = async (event) => {
 
 
 
-$('#login-form').submit(function( event ) {
-  loginFormHandler (event);
+$('#login-btn').click(function() {
+  loginFormHandler ();
 });
 
 
-$('#signup-form').submit(function( event ) {
-  signupFormHandler (event);
+$('#signup-btn').click(function() {
+  signupFormHandler ();
 });

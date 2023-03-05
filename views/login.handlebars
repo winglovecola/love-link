@@ -1,19 +1,20 @@
+<link rel="stylesheet" href="/assets/css/login.css" />
+
+
 <div class="container">
-  
+  <div id="slogan">Find your love anywhere in the world</div>
   <div class="login-card">
     <h2 class="page-title">Login</h2>
     <div id="signin-status" class="form-error"></div>
     <form id="login-form" class="form">
       <div class="form-group">
-        <label for="login-email">Email:</label>
-        <input class="form-input" type="text" id="login-email" />
+        <input class="form-input" type="text" id="login-email" placeholder="Email"/>
       </div>
       <div class="form-group">
-        <label for="login-ps">Password:</label>
-        <input class="form-input" type="password" id="login-ps" />
+        <input class="form-input" type="password" id="login-ps" placeholder="Password"/>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
+        <button id="login-btn" class="btn btn-primary" type="button">login</button>
       </div>
     </form>
   </div>
@@ -25,32 +26,50 @@
     <form id="signup-form" class="form">
       <input type="hidden" id="signup-user-type" value="H"/>
       <div class="form-group">
-        <label for="signup-firstname">First Name:</label>
-        <input class="form-input" type="text" id="signup-firstname" />
+        <input class="form-input" type="text" id="signup-firstname"  placeholder="First Name" />
       </div>
 
       <div class="form-group">
-        <label for="signup-lastname">Last Name:</label>
-        <input class="form-input" type="text" id="signup-lastname" />
+        <input class="form-input" type="text" id="signup-lastname"  placeholder="Last Name"/>
       </div>
 
       <div class="form-group">
-        <label for="signup-username">Username:</label>
-        <input class="form-input" type="text" id="signup-username" />
+        <input class="form-input" type="text" id="signup-username"  placeholder="Username"/>
       </div>
       <div class="form-group">
-        <label for="signup-email">Email:</label>
-        <input class="form-input" type="text" id="signup-email" />
+        <input class="form-input" type="text" id="signup-email"  placeholder="Email"/>
       </div>
       <div class="form-group">
-        <label for="signup-ps">Password:</label>
-        <input class="form-input" type="password" id="signup-ps" />
+        <input class="form-input" type="password" id="signup-ps"  placeholder="Password"/>
+      </div>
+
+      <div class="form-group">
+
+        <input type="radio" id="gender-m" name="gender" value="m"><label for="gender-m"><img src="/assets/img/site/male.png" height="20"/>Male</label>&nbsp;&nbsp;&nbsp;<input type="radio" id="gender-f" name="gender" value="f"><label for="gender-f"><img src="/assets/img/site/female.png" height="20"/>Female</label>
+
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" type="submit">Signup</button>
+        <button id="signup-btn" class="btn btn-primary" type="button">Signup</button>
       </div>
     </form>
   </div>
 </div>
+
+
+
+
+<div id="wallphoto2" class="wallphoto" style="width: 150px; transform: rotate(15deg); top: 410px; left: 100px;"><img src="/assets/img/site/wallphoto2.jpg"></div>
+
+<div id="wallphoto3" class="wallphoto" style="width: 150px; transform: rotate(-15deg); top: 0px; right: 40px;"><img src="/assets/img/site/wallphoto3.jpg"></div>
+<div id="wallphoto4" class="wallphoto" style="width: 160px; transform: rotate(-20deg); top: 430px; right: 100px;"><img src="/assets/img/site/wallphoto4.jpg"></div>
+
+
+<div id="wallphoto5" class="wallphoto" style="width: 250px; transform: rotate(15deg); top: 240px; right: 40px;"><img src="/assets/img/site/wallphoto5.jpg"></div>
+<div id="wallphoto6" class="wallphoto" style="width: 250px; transform: rotate(15deg); right: 400px; bottom: 20px;"><img src="/assets/img/site/wallphoto6.jpg"></div>
+
+<div id="wallphoto7" class="wallphoto" style="width: 250px; transform: rotate(-15deg); top: 240px; left: 40px;"><img src="/assets/img/site/wallphoto7.jpg"></div>
+<div id="wallphoto8" class="wallphoto" style="width: 250px; transform: rotate(-15deg); bottom: 20px; left: 400px;"><img src="/assets/img/site/wallphoto8.jpg"></div>
+
+
 
 <script src="/assets/js/login.js"></script>

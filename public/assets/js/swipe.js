@@ -13,16 +13,15 @@ let userIndex = 0;
 
 // Function to display the next user, displays avatar
 function displayUser() {
-  // Display the user's avatar in the carousel
-  const newDiv = $('<div>');
-  newDiv.addClass('carousel-item active');
-  carouselInner.append(newDiv);
+
+  // Display the user's avatar
   let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.gender}/${currentUser.avatar}`);
-  avatar.addClass('avatar d-block w-100');
-  newDiv.append(avatar);
+  avatar.attr('class', 'avatar');
+  carouselInner.append(avatar);
+
 
   // Display the user's bio
-  let name = $('<h4>').text(`${currentUser.firstname} ${currentUser.lastname}`).addClass('biotext');
+  let name = $('<h4>').text(`${currentUser.firstname} ${currentUser.lastname}`).addClass('biotext-name');
   let bio = $('<p>').text(currentUser.bio).addClass('biotext');
   bio.attr('class', 'bio');
   bioContainer.append(name, bio);
@@ -65,8 +64,9 @@ async function initCarousel() {
 // Create a function to initialize the page
 async function init() {
   // Make a request to get all potential matches for the user
+
   try {
-    const response = await fetch('/api/users');
+    const response = await fetch('/api/users/swipe');
     if (response.ok) {
       const data = await response.json();
       // Push the users into the usersArray
@@ -75,6 +75,8 @@ async function init() {
       }
       // Set the current user
       currentUser = usersArray[userIndex];
+
+
     } else {
       throw response.json();
     }

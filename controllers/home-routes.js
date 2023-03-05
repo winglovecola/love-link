@@ -63,30 +63,9 @@ router.get('/ai-partner', withAuth,async (req, res) => {
 // Swiping page and get all possible matches
 router.get('/', withAuth, async (req, res) => {
   try {
-    // Determine gender of user
-    const gender = req.session.gender;
-    let userData;
-
-    if (gender === 'm') {
-      userData = await User.findAll({
-        where: {
-          gender: 'f'
-        }
-      });
-    } else {
-      userData = await User.findAll({
-        where: {
-          gender: 'm'
-        }
-      });
-    }
-
-    const users = userData.map((user)=>
-      user.get({ plain: true })
-    );
 
     res.render('matches', {
-      users,
+
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

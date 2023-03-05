@@ -1,0 +1,43 @@
+.carousel {
+  width:400px;
+  min-height: 400px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
+}
+.carousel img {
+
+  width: 100%;
+}
+
+#bio-sec {
+
+  margin: auto;
+  margin-top: 10px;
+  font-size: 24px;
+}
+
+
+.biotext-name {
+
+  font-weight: bold;
+}
+
+.swipe-option-btn {
+
+  display: inline-block;
+  cursor: pointer;
+  
+}
+
+.swipe-option-btn img {
+
+  width: 100px;
+}
+
+.swipe-option-btn img:hover {
+
+  width: 120px;
+}

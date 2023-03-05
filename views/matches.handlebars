@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="/assets/css/swipe.css" />
+
+
 <div>
     <section class="container photos">
          {{!-- Carousel so the user can click through different photos of potential matches --}}
@@ -16,25 +19,14 @@
 
     </section>
 
-    <section class="container">
-        <div class="row">
-
-            <div class="col-1" id="dislike-btn">
-                <button>dislike</butt>
-            </div>
-
-            <div class="col-10 bio">
-            </div>
-            
-            <div class="col-1" id="like-btn">
-                <button>like</button>
-            </div>
-        </div>
+    <section id="bio-sec">
+        <div class="bio"></div>
     </section>
 
 </div>
 
+<div id="dislike-btn" class="swipe-option-btn"><img src="/assets/img/site/dislike.png"></div>
+<div id="like-btn" class="swipe-option-btn"><img src="/assets/img/site/like.png"></div>
 
 
-{{{userDataString}}}
 <script src="/assets/js/swipe.js" ></script>

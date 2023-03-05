@@ -25,5 +25,8 @@ const dashboard = async () => {
   }
 };
 
+$('#link-logout').click(function() {
+  logout ();
+});
 
-document.querySelector('#logout').addEventListener('click', logout);
+

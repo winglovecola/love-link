@@ -52,6 +52,10 @@ User.init(
       type: DataTypes.CHAR,
       allowNull: true,
     },
+    personality: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     interest: {
       type: DataTypes.STRING,
       allowNull: true,

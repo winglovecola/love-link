@@ -14,7 +14,7 @@ let avatarIndex = 0;
 function displayAvatar() {
   // Display the avatar's avatar
   let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentAvatar.gender}/${currentAvatar.avatar}`);
-  avatar.attr('class', 'avatar');
+  avatar.attr('class', 'avatar d-block w-100');
   carouselInner.append(avatar);
 }
 
@@ -79,14 +79,22 @@ async function genderEventHandler(gender) {
 async function handleFormSubmit(event) {
   event.preventDefault();
 
+  const form = document.getElementById('ai-prompt-form');
+
+  // Get all selected personality traits
+  const selectedTraits = Array.from(form.querySelectorAll('input[name="personality[]"]:checked')).map((input) => input.value).join(', ');
+
   // Get the form data
   const formData = {
     firstName: $('#firstname').val(),
     lastName: $('#lastname').val(),
     gender: $('input[name=\'gender\']:checked').val(),
     interest: $('#interests').val(),
+    personalitytraits: selectedTraits,
     avatar: currentAvatar.avatar
   };
+
+  console.log(formData);
 
   // Make a request to the server to add the AI profile
   try {
@@ -121,6 +129,9 @@ genderRadios.on('change', () => {
   // Reset the avatar index and array
   avatarIndex = 0;
   avatarsArray = [];
+
+  // Let the user know they need to scroll to the avatart they want to use
+  $('#avatar-instructions').text('Scroll to the avatar you want for your AI partner.');
 
   // Get the current gender the user selected
   genderRadios.each((index, element) => {

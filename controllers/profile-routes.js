@@ -8,9 +8,9 @@ const withAuth = require('../utils/auth');
 router.get('/', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    console.log(req.session);
     const userData = await User.findByPk(req.session.userid);
-    console.log(userData);
+
+    console.log('userid:', req.session.userid);
 
     const user = [userData].map((userInfo) => userInfo.get({ plain: true }));
 
@@ -23,7 +23,5 @@ router.get('/', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-module.exports = router;
 
 module.exports = router;

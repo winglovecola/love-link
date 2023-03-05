@@ -22,8 +22,8 @@ const withAuth = require('../utils/auth');
   }
 }); */
 
-// Get all matches
-router.get('/friendlist', async (req, res) => {
+// Friendslist page
+router.get('/friendlist', withAuth, async (req, res) => {
   try {
     res.render('friendlist', {
       loggedIn: req.session.loggedIn,
@@ -34,7 +34,8 @@ router.get('/friendlist', async (req, res) => {
   }
 });
 
-router.get('/matches', async (req, res) => {
+// Matches page
+router.get('/matches', withAuth, async (req, res) => {
   try {
     res.render('friendlist', {
       userid: req.session.userid,
@@ -46,7 +47,8 @@ router.get('/matches', async (req, res) => {
   }
 });
 
-router.get('/ai-partner', async (req, res) => {
+// AI partner page
+router.get('/ai-partner', withAuth,async (req, res) => {
   try {
     res.render('ai-prompts', {
       loggedIn: req.session.loggedIn,
@@ -63,7 +65,7 @@ router.get('/', withAuth, async (req, res) => {
   try {
     // Determine gender of user
     const gender = req.session.gender;
-    let userData; 
+    let userData;
 
     if (gender === 'm') {
       userData = await User.findAll({

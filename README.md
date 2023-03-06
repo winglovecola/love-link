@@ -13,6 +13,8 @@ Express.js
 Node.js (with Express.js) 
 MySQL/Sequelize
 Handlebars.js
+Sharp.js
+Multer.js
 Firebase
 
 
@@ -29,7 +31,9 @@ Firebase
 
 ## Preview
 
-![Screenshot](https://github.com/winglovecola/love-link/blob/main/assets/images/screenshot.jpg?raw=true)
+![Screenshot 1](https://github.com/winglovecola/love-link/blob/main/assets/img/site/screenshot1.jpg?raw=true)
+
+![Screenshot 2](https://github.com/winglovecola/love-link/blob/main/assets/img/site/screenshot2.jpg?raw=true)
 
 
 

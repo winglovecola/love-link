@@ -11,7 +11,7 @@ const logout = async () => {
   }
 };
 
-
+/*
 const dashboard = async () => {
   const response = await fetch('/profile', {
     method: 'GET',
@@ -23,7 +23,7 @@ const dashboard = async () => {
   } else {
     alert('Failed to load dashboard.');
   }
-};
+}; */
 
 $('#link-logout').click(function() {
   logout ();

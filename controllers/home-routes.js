@@ -48,9 +48,9 @@ router.get('/matches', withAuth, async (req, res) => {
 });
 
 // AI partner page
-router.get('/ai-partner', withAuth,async (req, res) => {
+router.get('/ai-partner', withAuth, async (req, res) => {
   try {
-    res.render('ai-prompts', {
+    res.render('ai-partner', {
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

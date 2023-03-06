@@ -10,11 +10,23 @@ router.get('/', withAuth, async (req, res) => {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.userid);
 
-    console.log('userid:', req.session.userid);
+    //console.log('userid:', req.session.userid);
 
-    const user = [userData].map((userInfo) => userInfo.get({ plain: true }));
+    const user = userData.get({ plain: true });
 
-    res.render('user-profile', {
+    if (user.avatar_type === 'C') {
+
+      user.avatarImgPath = `/assets/img/avatar/custom/${user.avatar}`;
+    } else {
+      if (user.gender === 'm') {
+        user.avatarImgPath = `/assets/img/avatar/preset/m/${user.avatar}`;
+      } else {
+        user.avatarImgPath = `/assets/img/avatar/preset/f/${user.avatar}`;
+      }
+
+    }
+    //console.log(user);
+    res.render('profile', {
       user,
       loggedIn: req.session.loggedIn,
     });

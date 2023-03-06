@@ -236,6 +236,9 @@ router.get('/photos/:userid', async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.userid, {
       include: [{model: Photo}],
+      order: [
+        ['created_time', 'DESC'],
+      ]
     });
 
     console.log('made it into the direct route');

@@ -15,7 +15,7 @@ function renderUserList (mode) {
       let thisUser = userArrayObj['u' + element];
       let avatarPath = '';
       if (thisUser.avatar_type === 'C') {
-        avatarPath = `/assets/img/avatar/custom/${thisUser.id}/${thisUser.avatar}`;
+        avatarPath = `/assets/img/avatar/custom/${thisUser.avatar}`;
       } else {
         avatarPath = `/assets/img/avatar/preset/${thisUser.gender}/${thisUser.avatar}`;
       }

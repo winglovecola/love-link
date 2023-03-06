@@ -2,12 +2,7 @@ const { Match } = require('../models');
 //const sequelize = require('../config/connection');
 const matchData = [
   // Start of Male Users List
-  {
-    userid: 1,
-    match_id: 61,
-    created_time: Date.now(),
-    updated_time: Date.now(),
-  },
+
   {
     userid: 1,
     match_id: 62,
@@ -23,12 +18,6 @@ const matchData = [
   {
     userid: 1,
     match_id: 71,
-    created_time: Date.now(),
-    updated_time: Date.now(),
-  },
-  {
-    userid: 1,
-    match_id: 72,
     created_time: Date.now(),
     updated_time: Date.now(),
   },
@@ -51,12 +40,6 @@ const matchData = [
     updated_time: Date.now(),
   },
   {
-    userid: 61,
-    match_id: 1,
-    created_time: Date.now(),
-    updated_time: Date.now(),
-  },
-  {
     userid: 62,
     match_id: 1,
     created_time: Date.now(),
@@ -71,12 +54,6 @@ const matchData = [
   {
     userid: 1,
     match_id: 70,
-    created_time: Date.now(),
-    updated_time: Date.now(),
-  },
-  {
-    userid: 70,
-    match_id: 1,
     created_time: Date.now(),
     updated_time: Date.now(),
   },

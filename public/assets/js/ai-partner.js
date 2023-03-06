@@ -13,7 +13,11 @@ let avatarIndex = 0;
 // Create a function to display the an avatar
 function displayAvatar() {
   // Display the avatar's avatar
-  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentAvatar.gender}/${currentAvatar.avatar}`);
+
+  // eslint-disable-next-line quotes
+  let selectedGender = $(`input[name='gender']:checked`).val();
+
+  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${selectedGender}/${currentAvatar}`);
   avatar.attr('class', 'avatar d-block w-100');
   carouselInner.append(avatar);
 }
@@ -55,14 +59,11 @@ function prevAvatar() {
 async function genderEventHandler(gender) {
   // Make a request to get all potential matches for the avatar
   try {
-    const response = await fetch(`/api/users/${gender}`);
+    const response = await fetch(`/api/users/preset-avatar/${gender}`);
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      // Push the avatars into the avatarsArray
-      for (let i = 0; i < data.length; i++) {
-        avatarsArray.push(data[i]);
-      }
+      avatarsArray = await response.json();
+      //console.log(avatarsArray);
+
       // Set the current avatar
       currentAvatar = avatarsArray[avatarIndex];
     } else {
@@ -88,10 +89,11 @@ async function handleFormSubmit(event) {
   const formData = {
     firstName: $('#firstname').val(),
     lastName: $('#lastname').val(),
-    gender: $('input[name=\'gender\']:checked').val(),
+    // eslint-disable-next-line quotes
+    gender: $(`input[name='gender']:checked`).val(),
     interest: $('#interests').val(),
     personality: selectedTraits,
-    avatar: currentAvatar.avatar
+    avatar: currentAvatar
   };
 
   console.log(formData);
@@ -144,3 +146,8 @@ genderRadios.on('change', () => {
 // Event listeners to scroll through avatar options
 nextBtn.on('click', nextavatar);
 prevBtn.on('click', prevAvatar);
+
+
+$('.carousel-control').click(function (e) {
+  e.preventDefault();
+});

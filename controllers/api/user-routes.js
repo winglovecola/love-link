@@ -9,6 +9,7 @@ const sharp = require('sharp'); // middleware for image compression
 
 const userImgPhotoPath = '../../public/assets/img/photos';
 const userImgAvatarCustomPath = '../../public/assets/img/avatar/custom';
+const userImgAvatarPresetPath = '../../public/assets/img/avatar/preset';
 const userImgTempUpload = '../../public/assets/img/tmp_uploads';
 
 
@@ -20,30 +21,7 @@ const uploadAvatar = multer({
   dest: path.join(__dirname, userImgTempUpload),
 });
 
-// Get photos for a user
-router.get('/photos', async (req, res) => {
-  try {
-    const userData = await User.findByPk(req.session.userid, {
-      include: [{model: Photo}],
-    });
 
-    console.log('made it into the direct route');
-
-    if (!userData) {
-      res.status(404).json({ message: 'No user found with this id!' });
-      return;
-    }
-
-    user = userData.get({ plain: true });
-
-    // console.log('userData:', userData);
-    // console.log('user:', user);
-
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 // GET all users
 router.get('/', async (req, res) => {
@@ -224,6 +202,62 @@ router.post('/photos', uploadPhoto.single('photos'), async (req, res) => {
   }
 });
 
+
+
+// Get photos for a user
+router.get('/photos', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.session.userid, {
+      include: [{model: Photo}],
+    });
+
+    console.log('made it into the direct route');
+
+    if (!userData) {
+      res.status(404).json({ message: 'No user found with this id!' });
+      return;
+    }
+
+    user = userData.get({ plain: true });
+
+    // console.log('userData:', userData);
+    // console.log('user:', user);
+
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
+// Get photos for a user
+router.get('/photos/:userid', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.userid, {
+      include: [{model: Photo}],
+    });
+
+    console.log('made it into the direct route');
+
+    if (!userData) {
+      res.status(404).json({ message: 'No user found with this id!' });
+      return;
+    }
+
+    user = userData.get({ plain: true });
+
+    // console.log('userData:', userData);
+    // console.log('user:', user);
+
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
 // Create new avatar image
 router.post('/avatar', uploadAvatar.single('avatar'), async (req, res) => {
   try {
@@ -321,5 +355,24 @@ router.get('/:gender', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+// GET 10 users of a certain gender
+router.get('/preset-avatar/:gender', async (req, res) => {
+  try {
+    // Get the number of users for the given gender
+    const avatarFolder = `${path.join(__dirname, userImgAvatarPresetPath)}/${req.params.gender}`;
+    //console.log (avatarFolder)
+
+    fs.readdir(avatarFolder, (err, avatarImgData) => {
+      res.status(200).json(avatarImgData);
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

@@ -15,9 +15,24 @@ let userIndex = 0;
 function displayUser() {
 
   // Display the user's avatar
-  let avatar = $('<img>').attr('src', `/assets/img/avatar/preset/${currentUser.gender}/${currentUser.avatar}`);
-  avatar.attr('class', 'avatar');
-  carouselInner.append(avatar);
+  let avatar = '';
+
+  if (currentUser.avatar_type === 'C') {
+    avatar =`/assets/img/avatar/custom/${currentUser.avatar}`;
+  } else {
+    avatar = `/assets/img/avatar/preset/${currentUser.gender}/${currentUser.avatar}`;
+  }
+
+
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('carousel-item');
+  newDiv.classList.add('active');
+  carouselInner.append(newDiv);
+
+  const newImg = document.createElement('img');
+  newImg.setAttribute('src', avatar);
+  newImg.setAttribute('class', 'd-block w-100');
+  newDiv.append(newImg);
 
 
   // Display the user's bio
@@ -30,7 +45,7 @@ function displayUser() {
 // Create a function to initialize the carousel
 async function initCarousel() {
   try {
-    const response = await fetch('/api/users/photos');
+    const response = await fetch('/api/users/photos/' + currentUser.id);
 
     if (response.ok) {
       const userData = await response.json();
@@ -51,7 +66,7 @@ async function initCarousel() {
         carouselInner.append(newDiv);
 
         const newImg = document.createElement('img');
-        newImg.setAttribute('src', `assets/img/photos/${currentUser.id}/${photo.img_filename}`);
+        newImg.setAttribute('src', `/assets/img/photos/${currentUser.id}/${photo.img_filename}`);
         newImg.setAttribute('class', 'd-block w-100');
         newDiv.append(newImg);
       }

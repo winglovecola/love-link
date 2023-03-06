@@ -75,6 +75,7 @@ User.init(
     avatar_type: {
       type: DataTypes.CHAR, //C = custom  or '' = preset
       allowNull: true,
+      defaultValue: ''
     },
     personality: {
       type: DataTypes.STRING,

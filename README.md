@@ -31,9 +31,9 @@ Firebase
 
 ## Preview
 
-![Screenshot 1](https://github.com/winglovecola/love-link/blob/main/assets/img/site/screenshot1.jpg?raw=true)
+![Screenshot 1](https://github.com/winglovecola/love-link/blob/main/assets/img/site/screenshot-1.jpg?raw=true)
 
-![Screenshot 2](https://github.com/winglovecola/love-link/blob/main/assets/img/site/screenshot2.jpg?raw=true)
+![Screenshot 2](https://github.com/winglovecola/love-link/blob/main/assets/img/site/screenshot-2.jpg?raw=true)
 
 
 

@@ -13,11 +13,25 @@ function renderUserList (mode) {
     matchData[mode].forEach((element) => {
 
       let thisUser = userArrayObj['u' + element];
+      let avatarPath = '';
+      if (thisUser.avatar_type === 'C') {
+        avatarPath = `/assets/img/avatar/custom/${thisUser.id}/${thisUser.avatar}`;
+      } else {
+        avatarPath = `/assets/img/avatar/preset/${thisUser.gender}/${thisUser.avatar}`;
+      }
+
+      let aiIcon = '';
+      if (thisUser.type === 'A') {
+        aiIcon = '<div class="ai-icon">V</div>';
+      } else {
+        aiIcon = '';
+      }
+
 
       html += `
       <div id="u${thisUser.id}" class="cards userlist" onclick="chatStart (userArrayObj.u${element})">
-        <div class="cards-body">
-          <div class="avatar"><img src="/assets/img/avatar/preset/${thisUser.gender}/${thisUser.avatar}"></div>
+        <div class="cards-body">${aiIcon}
+          <div class="avatar"><img src="${avatarPath}"></div>
           
           <div class="fullname">${thisUser.firstname} ${thisUser.lastname}</div>
         </div>

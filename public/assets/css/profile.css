@@ -1,0 +1,173 @@
+
+
+#user-info-con .avatar {
+
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+
+ .avatar img {
+
+    width: 100%;
+    height: 100%;
+}
+
+
+#user-info {
+
+  text-align: left;
+  padding-top: 20px;
+}
+
+#user-fullname {
+
+  margin-bottom: 40px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+#user-interest{
+
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-style: italic;
+}
+
+#user-bio{
+
+  margin-bottom: 10px;
+}
+
+#user-ai-create {
+
+  display: block;
+  width: 250px;
+  height: 150px;
+  border-radius: 20px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#user-option-con {
+
+  margin-top: 30px;
+}
+
+#create-ai-btn {
+
+  height: 45px;
+}
+
+#user-avatar-upload, #user-photo-upload {
+
+  display: flex;
+  flex-flow: column;
+  width: 250px;
+  height: 150px;
+  border-radius: 20px;
+  border: 1px solid black;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.user-photo {
+
+  width: 300px;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-photo img {
+
+  width: 100%;
+
+}
+
+
+#avatar-uploading {
+  display: none;
+}
+
+#photo-uploading {
+  display: none;
+}
+
+#user-photo-sec {
+
+  margin-top: 30px;
+  text-align: left;
+}
+#user-photo-sec h2 {
+
+  font-weight: bold;
+}
+
+
+.option .button {
+
+  width: 130px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 5px;
+  background-color: rgb(42, 118, 176);
+  color: white;
+}
+
+.option .button:hover {
+
+  background-color: rgb(49, 166, 255);
+
+}
+
+
+
+.upload-input {
+  width: 210px;
+  border-radius: 10px;
+  border: 1px solid rgb(153, 153, 153);
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+/* LAYOUT */
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    gap: 20px;
+    align-items: top;
+    
+  }
+  
+
+  /* CARDS //border: 0px;*/
+ .cards {
+    
+    flex: 0 1 200px;
+    text-align: center;
+  }
+  
+  
+  .cards-body {
+    display: block;
+    text-align: center;
+    margin: 5px 0px 5px 0px;
+  }
+  
+
+
+
+  

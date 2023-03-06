@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
 
     const userDataObj = await User.findAll({
 
-      attributes: ['id', 'username', 'firstname', 'lastname', 'gender', 'interest', 'avatar', 'avatar_type', 'type'],
+      attributes: ['id', 'username', 'firstname', 'lastname', 'gender', 'personality', 'interest', 'avatar', 'avatar_type', 'type'],
 
       where: {
         id: allUserList,

@@ -9,6 +9,7 @@ LoveLink is an app that allows users to find their soulmate. Users can create a 
 It is a new type of dating app that innovates on what is currently available in the market. At LoveLink, you have the option to generate your own AI Partner. The AI partner is generated based on your personality and preferences. The AI partner will be able to chat with you, keep you company and become you LoveLink.
 
 It is a full-stack application that uses the following technologies:
+```
 Express.js
 Node.js (with Express.js) 
 MySQL/Sequelize
@@ -17,6 +18,7 @@ Sharp.js
 Multer.js
 Firebase (Google Realtime Database)
 OpenAI (ChatGPT)
+```
 
 ## Table of Contents
 

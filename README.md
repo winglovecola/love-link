@@ -52,9 +52,12 @@ Email: winglovework@gmail.com (Please reach me with additional questions)
 
 ## Credit
 
-John Abou (https://github.com/john-abou)
-Thomas Tran (https://github.com/tranthom618)
 Wing (Yong Kang He) (https://github.com/winglovecola)
+
+John Abou (https://github.com/john-abou)
+
+Thomas Tran (https://github.com/tranthom618)
+
 
 
 ## License

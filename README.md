@@ -15,8 +15,8 @@ MySQL/Sequelize
 Handlebars.js
 Sharp.js
 Multer.js
-Firebase
-
+Firebase (Google Realtime Database)
+OpenAI (ChatGPT)
 
 ## Table of Contents
 

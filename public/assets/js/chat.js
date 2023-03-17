@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: '1:970369934987:web:6c73f0576da9b8913a168e'
 };
 
-let k1 = 'sk-ol0dcC4nia3foJ9Rxt';
+let k1 = 'sk-cOZ6jIn1hQ67xXjPXJu';
 
 
 // Initialize Firestore through Firebase
@@ -27,7 +27,7 @@ let aiPersonalityInit = false;
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = firebase.firestore();
-let k2 = 'W2T3BlbkFJxW9ja3utygVupXiTIufc';
+let k2 = 'hT3BlbkFJTa2rBLRw6Of8KfW1eZm4';
 
 function uuidv4() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>

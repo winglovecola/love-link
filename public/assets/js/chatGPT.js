@@ -5,18 +5,12 @@ async function chatGptApi(search) {
   let cak = k1 + k2;
 
   let fetchData = {
-<<<<<<< HEAD
-    model: 'text-davinci-003',
-    messages: [{
+    model: 'gpt-3.5-turbo',
+    prompt: [{
       'role': 'user',
       'content': search
     }],
-    temperature: 0.7,
-=======
-    model: 'gpt-3.5-turbo',
-    prompt: search,
     temperature: 1,
->>>>>>> 41507b6665856c4330e2e32fb23aec9418bc0150
     max_tokens: 256,
     top_p: 1,
     frequency_penalty: 0,

@@ -1,13 +1,13 @@
 //chatGPT
 async function chatGptApi(search) {
 
-  let chatGptApiUrl = 'https://api.openai.com/v1/completions';
+  let chatGptApiUrl = 'https://api.openai.com/v1/chat/completions';
   let cak = k1 + k2;
 
   let fetchData = {
-    model: 'text-davinci-003',
+    model: 'gpt-3.5-turbo',
     prompt: search,
-    temperature: 0.7,
+    temperature: 1,
     max_tokens: 256,
     top_p: 1,
     frequency_penalty: 0,
@@ -46,7 +46,7 @@ async function chatGptApi(search) {
 
       //loading data into page
 
-      //textTrimed = data.choices[0].text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+      //textTrimed = data.choices[0].message.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
       return data;
     });

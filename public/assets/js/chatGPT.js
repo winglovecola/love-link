@@ -6,7 +6,10 @@ async function chatGptApi(search) {
 
   let fetchData = {
     model: 'text-davinci-003',
-    prompt: search,
+    messages: [{
+      'role': 'user',
+      'content': search
+    }],
     temperature: 0.7,
     max_tokens: 256,
     top_p: 1,

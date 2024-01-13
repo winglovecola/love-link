@@ -186,7 +186,7 @@ async function msgSend(senderUsersId, receiverUserData, msgText) {
 
     //console.log (chatGptRes);
 
-    let respondingMsg = chatGptRes.choices[0].text;
+    let respondingMsg = chatGptRes.choices[0].message.content;
 
     if (respondingMsg) {
 

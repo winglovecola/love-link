@@ -6,7 +6,10 @@ async function chatGptApi(search) {
 
   let fetchData = {
     model: 'gpt-3.5-turbo',
-    prompt: search,
+    prompt: [{
+      'role': 'user',
+      'content': search
+    }],
     temperature: 1,
     max_tokens: 256,
     top_p: 1,

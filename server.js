@@ -28,11 +28,23 @@ const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
+
+app.get('/env.js', (req, res) => {
+  res.send(`
+    window.env = {
+      AI_API_KEY: '${process.env.AI_API_KEY}'
+    };
+  `);
+});
+
+
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));

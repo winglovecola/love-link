@@ -1,4 +1,6 @@
 /* eslint-disable indent */
+
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyDiYC4wy1-9tanm1VrYTxqxHDH1ZrtLOyI',
@@ -10,7 +12,6 @@ const firebaseConfig = {
   appId: '1:970369934987:web:6c73f0576da9b8913a168e'
 };
 
-let k1 = 'sk-cOZ6jIn1hQ67xXjPXJu';
 
 
 // Initialize Firestore through Firebase
